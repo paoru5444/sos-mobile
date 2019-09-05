@@ -8,7 +8,7 @@ export const Wrapper = styled.View`
   height: ${ height * (80 / 100) };
   background-color: #fff;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `
 
 export const Card = styled.TouchableHighlight`
@@ -34,5 +34,50 @@ export const CardRow = styled.View`
 `
 
 export const Text = styled.Text`
-  color:${props => props.color || "#333"}
+  color:${props => props.color || "#333"};
+  font-size: ${props => props.size || '16px'};
+`
+
+export const TextInput = styled.TextInput`
+  border: #333 0.5px solid;
+  border-radius: 10px;
+  width: ${ width - 50};
+  flex-wrap: wrap;
+`
+
+export const Row = styled.View`
+  flex-direction: row;
+  alignItems: center;
+  flex-wrap: wrap;
+`
+
+export const Queixas = styled.View`
+  flex-direction: row;
+  alignItems: center;
+  width: ${ width };
+`
+export const QueixaField = styled.View`
+  width: ${ width };
+  height: ${ height * (80 / 100) };
+  background-color: #fff;
+  align-items: flex-start;
+  justify-content: flex-start;
+`
+
+export const CardQueixa = styled.View`
+  width: 120px;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  border-radius: 15px;
+`
+
+export const Chip = styled.TouchableHighlight`
+  width: auto;
+  height: auto;
+  border-radius: 25px;
+  background-color: ${props => props.color || 'orange'}
+  padding: 15px;
+  margin: 5px;
 `

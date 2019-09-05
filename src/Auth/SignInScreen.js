@@ -101,10 +101,9 @@ class SignInScreen extends Component {
       // this.props.navigation.navigate('App');
 
       try {
-        const response = await Server.post('/login', values, "")
-        const token = response.data.token;
-        console.warn('token', token)
-        await AsyncStorage.setItem('userToken', token);
+        // const response = await Server.post('/login', values, "")
+        // const token = response.data.token;
+        await AsyncStorage.setItem('userToken', 'abc');
         this.props.navigation.navigate('App');
       } catch(error) {
         console.log(error)

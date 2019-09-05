@@ -7,7 +7,7 @@ import ResetPasswordScreen from './Auth/ResetPasswordScreen'
 
 import HomeScreen from './Home/HomeScreen'
 import DoctorScreen from './Home/DoctorScreen'
-import DeafScreen from './Home/DeafScreen'
+import DeafScreen from './Home/Deaf/DeafScreen'
 
 const AppStack = createStackNavigator({
   Home: HomeScreen,
