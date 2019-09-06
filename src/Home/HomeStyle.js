@@ -36,6 +36,7 @@ export const CardRow = styled.View`
 export const Text = styled.Text`
   color:${props => props.color || "#333"};
   font-size: ${props => props.size || '16px'};
+  align-self: flex-start;
 `
 
 export const TextInput = styled.TextInput`
@@ -65,12 +66,12 @@ export const QueixaField = styled.View`
 `
 
 export const CardQueixa = styled.View`
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   justify-content: center;
   align-items: center;
   background-color: grey;
-  border-radius: 15px;
+  border-radius: 50px;
 `
 
 export const Chip = styled.TouchableHighlight`

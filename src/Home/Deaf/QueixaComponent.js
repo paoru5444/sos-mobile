@@ -8,12 +8,16 @@ import {
 } from 'react-native'
 
 import {
-  TextInput, Row, Queixas, Text, Wrapper, CardQueixa, Chip,
+  TextInput, Queixas, Text, CardQueixa, Chip,
 } from '../HomeStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 
-const QueixaComponent = ({ next, queixas }) => (
+import {
+    Wrapper, Row
+} from '../../styles'
+
+const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => (
     <Fragment>
         <Wrapper>
         <View style={{ height: 10, }} />
@@ -39,46 +43,62 @@ const QueixaComponent = ({ next, queixas }) => (
                     <Text>teste</Text>
                 </CardQueixa>
                 <View style={{ width: 5 }} />
+
+                <CardQueixa>
+                    <Text>teste</Text>
+                </CardQueixa>
+                <View style={{ width: 5 }} />
+
+                <CardQueixa>
+                    <Text>teste</Text>
+                </CardQueixa>
+                <View style={{ width: 5 }} />
+
+                <CardQueixa>
+                    <Text>teste</Text>
+                </CardQueixa>
+                <View style={{ width: 5 }} />
             </ScrollView>
             
             <View style={{ height: 20 }} />
-
-            <Text size="22px">O que sentir para vir aqui?</Text>
-            <View style={{ width: 5, height: 5 }} />
             
-            <Row>
-                <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+            <Row justify="flex-start">
+                <Text size="22px">O que sentir para vir aqui?</Text>
+                <View style={{ width: 5, height: 5 }} />
+                <TextInput onChangeText={(text) => getQueixaInput(text)} />
             </Row>
 
             <View style={{ width: 5, height: 10 }} />
 
             <Row>
-                <TouchableOpacity onPress={() => this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})}>
-                    <Row>
-                    <Text size="22px">Adicionar Queixa</Text>
-                    <View style={{ width: 5 }} />
-                    <Icon name="plus-square" size={30} color="#333" />
+                <TouchableOpacity onPress={() => adicionarQueixa()}>
+                    <Row justify="flex-start">
+                        <Text size="22px">Adicionar Queixa</Text>
+                        <View style={{ width: 5 }} />
+                        <Icon name="plus-square" size={30} color="#333" />
                     </Row>
                 </TouchableOpacity>
             </Row>
 
-            <View style={{ height: 20 }} />
-
-            <Text size="22px">O eu já falei:</Text>
+            <Row justify="flex-start">
+                <View style={{ height: 60 }} />
+                <Text size="22px">O eu já falei:</Text>
+            </Row>
 
             <Queixas>
-            <ScrollView style={{ maxHeight: 250, }}>
-                <Row>
-                {queixas.map((queixa, index) => (
-                    <Chip key={index}>
-                        <>
-                        {/* <Icon name="chevron-right" size={22} /> */}
-                        <Text size="18px" color="#f2f2f2">{queixa}</Text>
-                        </>
-                    </Chip>
-                ))}
-                </Row>
-            </ScrollView>
+                <View style={{ height: 20 }} />
+                <ScrollView style={{ maxHeight: 250, }}>
+                    <Row>
+                    {queixas.map((queixa, index) => (
+                        <Chip key={index}>
+                            <>
+                            {/* <Icon name="chevron-right" size={22} /> */}
+                            <Text size="18px" color="#f2f2f2">{queixa}</Text>
+                            </>
+                        </Chip>
+                    ))}
+                    </Row>
+                </ScrollView>
             </Queixas>     
         </Wrapper>    
 

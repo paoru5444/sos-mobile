@@ -23,8 +23,13 @@ class DeafScreen extends Component {
 
   
     handleBackPress = () => {
-      this.prev()
-      return true
+      const { step } = this.state;
+      if (step >= 1) {
+        this.prev() 
+        return true
+      } 
+
+      return false
     }
 
     constructor(props)  {
@@ -37,6 +42,8 @@ class DeafScreen extends Component {
       }
 
       this.next = this.next.bind(this)
+      this.adicionarQueixa = this.adicionarQueixa.bind(this)
+      this.getQueixaInput = this.getQueixaInput.bind(this)
     }
 
     next = () => {
@@ -47,15 +54,25 @@ class DeafScreen extends Component {
     }
 
     prev = () => {
-      alert("here")
       const { step } = this.state;
-      if (step > 1) {
+      if (step >= 1) {
         this.setState({
           step: step -1
         })
       }
+      console.warn('step', step)
     }
 
+    getQueixaInput = (queixa) => {
+      this.setState({
+        queixaInput: queixa,
+      })
+    }
+    adicionarQueixa = () => {
+      console.warn(this.state.queixaInput)
+      this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})
+    }
+ 
     goTo(route = "") {
       this.props.navigation.navigate(route)
     }
@@ -67,7 +84,12 @@ class DeafScreen extends Component {
         case 0:
           return (
             // Queixa Principal
-            <QueixaComponent next={this.next} queixas={queixas} queixaInput={queixaInput} />
+            <QueixaComponent
+              next={this.next}
+              queixas={queixas}
+              getQueixaInput={this.getQueixaInput}
+              adicionarQueixa={this.adicionarQueixa}
+            />
           )
         case 1:
           return (

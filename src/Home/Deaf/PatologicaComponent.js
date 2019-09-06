@@ -4,12 +4,16 @@ import {
 } from 'react-native'
 
 import { 
-  TouchableOpacity, ScrollView, Button,
+  TouchableOpacity, ScrollView,
 } from 'react-native'
 
 import {
-  TextInput, Row, Queixas, Text, Wrapper, CardQueixa, Chip,
+  TextInput,
 } from '../HomeStyle'
+
+import {
+    Wrapper, Button, Text, Row,
+} from '../../styles'
 
 import Icon from 'react-native-vector-icons/Feather'
 
@@ -34,7 +38,7 @@ class PatologicaComponent extends Component {
 
     prev = () => {
         const { step } = this.state;
-        if (step > 1) {
+        if (step >= 1) {
             this.setState({
                 step: step -1
             })
@@ -54,6 +58,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
           case 1:
@@ -64,6 +77,15 @@ class PatologicaComponent extends Component {
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+                    </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
                     </Row>
                 </Fragment>
             )
@@ -76,6 +98,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
         case 3:
@@ -86,6 +117,15 @@ class PatologicaComponent extends Component {
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+                    </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
                     </Row>
                 </Fragment>
             )
@@ -98,6 +138,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
         case 5:
@@ -108,6 +157,15 @@ class PatologicaComponent extends Component {
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+                    </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
                     </Row>
                 </Fragment>
             )
@@ -120,6 +178,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
         case 7:
@@ -130,6 +197,15 @@ class PatologicaComponent extends Component {
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+                    </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
                     </Row>
                 </Fragment>
             )
@@ -142,6 +218,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
         case 9:
@@ -152,6 +237,15 @@ class PatologicaComponent extends Component {
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
+                    </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
                     </Row>
                 </Fragment>
             )
@@ -164,6 +258,15 @@ class PatologicaComponent extends Component {
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
+
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">Voltar para anterios</Text>
+                        </Button>
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">Ir para próximo</Text>
+                        </Button>
+                    </Row>
                 </Fragment>
             )
           default: 
@@ -174,11 +277,18 @@ class PatologicaComponent extends Component {
       }
 
     render() {
+        const { step } = this.state;
         return (
-            <Fragment>
+            <Wrapper>
                 { this.renderItem() }
-                <Button onPress={() => next()} title="História fisiológica" style={{ position: 'absolute', bottom: 0 }}/>
-            </Fragment>
+                <Row>
+                    <Text>Passo {step} de 10</Text>
+                </Row>
+                <View style={{ height: 80 }} />
+                <Button onPress={() => this.props.next()}>
+                    <Text color="#f2f2f7">História fisiológica</Text>
+                </Button>
+            </Wrapper>
         )
     }
 }
