@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import {
   Wrapper, Card, CardImage, CardRow, Text
-} from './HomeStyle'
+} from '../Home/HomeStyle'
 
 class DoctorScreen extends Component {
     constructor(props)  {
@@ -29,11 +29,9 @@ class DoctorScreen extends Component {
         <Fragment>
           <Wrapper>
             <View style={{ height: 15 }} />
-            <Card>
               <Text>
                 Médico
               </Text>
-            </Card>
           </Wrapper>
         </Fragment>
       );

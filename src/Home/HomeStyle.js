@@ -65,7 +65,7 @@ export const QueixaField = styled.View`
   justify-content: flex-start;
 `
 
-export const CardQueixa = styled.View`
+export const CardQueixa = styled.TouchableOpacity`
   width: 100px;
   height: 100px;
   justify-content: center;

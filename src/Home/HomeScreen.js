@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import {
-  View
+  View, Image,
 } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
+
 import {
-  Wrapper, Card, CardImage, CardRow, Text
-} from './HomeStyle'
+  WrapperHome, Footer, CardHome, RowHome, Text,
+} from '../styles'
 
 class HomeScreen extends Component {
     constructor(props)  {
@@ -15,7 +16,7 @@ class HomeScreen extends Component {
     }
 
     static navigationOptions = {
-      title: 'Escolha',
+      title: 'Seja Bem vindo ao SOS Libras',
     };
 
     state = {}
@@ -27,21 +28,21 @@ class HomeScreen extends Component {
     render() {
       return (
         <Fragment>
-          <Wrapper>
-            <Card onPress={() => this.goTo('Doctor')}>
-              <Text>
-                Médico
-              </Text>
-            </Card>
-
+          <WrapperHome>
+            <RowHome justify="flex-start">
+              <CardHome align="flex-start" rotate="rotate(180deg)" onPress={() => this.goTo('Doctor')}>
+                <Image source={require('../../assets/images/Home/doctor.png')} style={{ width: 150, height: 150, transform: [{ rotate: '180deg'}], }}/>
+              </CardHome>
+            </RowHome>
+            
             <View style={{ height: 15 }} />
 
-            <Card onPress={() => this.goTo('AuthLoading')}>
-              <Text>
-                Paciente
-              </Text>
-            </Card>
-          </Wrapper>
+            <RowHome justify="flex-end">
+              <CardHome onPress={() => this.goTo('AuthLoading')}>
+              <Image source={require('../../assets/images/Home/injury.png')} style={{ width: 150, height: 150, right: 20,}}/>
+              </CardHome>
+            </RowHome>
+          </WrapperHome>
         </Fragment>
       );
     }

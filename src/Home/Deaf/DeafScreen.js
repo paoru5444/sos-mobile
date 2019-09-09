@@ -9,15 +9,32 @@ import {
 
 
 import QueixaComponent from './QueixaComponent'
-import HistoriaComponent from './HistoriaComponent'
+import HistoriaComponent from './Historia/HistoriaComponent'
 import PatologicaComponent from './PatologicaComponent'
 
 class DeafScreen extends Component {
-    static navigationOptions = {
-      title: 'Queixa Principal',
-    };
+
+    static navigationOptions = ({navigation}) => {
+      return {
+        title: 'Anamnese'
+      }
+    }
+
+    choseTitle() {
+      const { step } = this.state;
+      
+      switch(step) {
+        case 0:
+          return 'Queixa Principal'
+        case 1:
+          return 'Historia da Doença'
+        case 2:
+          return 'Historia Patologica Pregressa'
+      }
+    }
 
     componentDidMount() {
+      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
       this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
 
@@ -39,11 +56,22 @@ class DeafScreen extends Component {
         step: 0,
         queixas: [],
         queixaInput: '',
+        duracaoSlider: 0,
+        frequenciaPicker: '',
+        intensidadeSlider: 1,
+        situacao: false,
       }
 
       this.next = this.next.bind(this)
       this.adicionarQueixa = this.adicionarQueixa.bind(this)
       this.getQueixaInput = this.getQueixaInput.bind(this)
+
+      this.getDuracao = this.getDuracao.bind(this)
+      this.getFrequencia = this.getFrequencia.bind(this)
+      this.getIntensidade = this.getIntensidade.bind(this)
+      this.getSituacao = this.getSituacao.bind(this)
+
+      this.goTo = this.goTo.bind(this)
     }
 
     next = () => {
@@ -51,6 +79,7 @@ class DeafScreen extends Component {
       this.setState({
         step: step + 1
       })
+      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
     }
 
     prev = () => {
@@ -60,7 +89,7 @@ class DeafScreen extends Component {
           step: step -1
         })
       }
-      console.warn('step', step)
+      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
     }
 
     getQueixaInput = (queixa) => {
@@ -68,18 +97,40 @@ class DeafScreen extends Component {
         queixaInput: queixa,
       })
     }
+
+    getDuracao = (duracao) => {
+      this.setState({
+        duracaoSlider: duracao,
+      })
+    }
+
+    getFrequencia = (frequencia) => {
+      this.setState({
+        frequenciaPicker: frequencia,
+      })
+    }
+
+    getIntensidade = (intensidade) => {
+      this.setState({
+        intensidadeSlider: intensidade,
+      })
+    }
+
+    getSituacao = (situacao) => {
+      this.setState({ situacao })
+    }
+
     adicionarQueixa = () => {
-      console.warn(this.state.queixaInput)
       this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})
     }
- 
+    
     goTo(route = "") {
       this.props.navigation.navigate(route)
     }
   
     renderItem = () => {
-      const { step, queixas, queixaInput } = this.state;
-
+      const { step, queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao } = this.state;
+      
       switch(step) {
         case 0:
           return (
@@ -89,11 +140,22 @@ class DeafScreen extends Component {
               queixas={queixas}
               getQueixaInput={this.getQueixaInput}
               adicionarQueixa={this.adicionarQueixa}
+              goTo={this.goTo}
             />
           )
         case 1:
           return (
-            <HistoriaComponent next={this.next} />
+            <HistoriaComponent
+              next={this.next}
+              getDuracao={this.getDuracao}
+              duracaoSlider={duracaoSlider}
+              getFrequencia={this.getFrequencia}
+              frequenciaPicker={frequenciaPicker}
+              getIntensidade={this.getIntensidade}
+              intensidadeSlider={intensidadeSlider}
+              getSituacao={this.getSituacao}
+              situacao={situacao}
+            />
           )
         case 2:
           return (
@@ -111,6 +173,7 @@ class DeafScreen extends Component {
     }
 
     render() {
+      
       return (
         <Fragment>
           { this.renderItem() }

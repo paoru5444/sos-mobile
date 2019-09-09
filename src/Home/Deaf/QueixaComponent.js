@@ -4,27 +4,28 @@ import {
 } from 'react-native'
 
 import { 
-  TouchableOpacity, ScrollView, Button,
+  TouchableOpacity, ScrollView,
 } from 'react-native'
 
 import {
-  TextInput, Queixas, Text, CardQueixa, Chip,
+  Queixas, CardQueixa, Chip,
 } from '../HomeStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 
 import {
-    Wrapper, Row
+    Wrapper, Footer, Row, TextInput, Button, Text
 } from '../../styles'
 
-const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => (
+
+const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo }) => (
     <Fragment>
         <Wrapper>
         <View style={{ height: 10, }} />
             <ScrollView horizontal style={{ maxHeight: 120}}>
 
             <View style={{ width: 5, }} />
-                <CardQueixa>
+                <CardQueixa onPress={() => goTo('Detalhes')}>
                     <Text>teste</Text>
                 </CardQueixa>
 
@@ -63,7 +64,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => 
             <View style={{ height: 20 }} />
             
             <Row justify="flex-start">
-                <Text size="22px">O que sentir para vir aqui?</Text>
+                <Text size="18px">O que sentir para vir aqui?</Text>
                 <View style={{ width: 5, height: 5 }} />
                 <TextInput onChangeText={(text) => getQueixaInput(text)} />
             </Row>
@@ -73,7 +74,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => 
             <Row>
                 <TouchableOpacity onPress={() => adicionarQueixa()}>
                     <Row justify="flex-start">
-                        <Text size="22px">Adicionar Queixa</Text>
+                        <Text size="18px">Adicionar Queixa</Text>
                         <View style={{ width: 5 }} />
                         <Icon name="plus-square" size={30} color="#333" />
                     </Row>
@@ -82,7 +83,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => 
 
             <Row justify="flex-start">
                 <View style={{ height: 60 }} />
-                <Text size="22px">O eu já falei:</Text>
+                <Text size="18px">O eu já falei:</Text>
             </Row>
 
             <Queixas>
@@ -100,9 +101,13 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa }) => 
                     </Row>
                 </ScrollView>
             </Queixas>     
-        </Wrapper>    
-
-        <Button onPress={() => next()} title="Historia da Doença"/>
+        </Wrapper>
+        
+        <Footer>
+            <Button radius="0" width="100%" height="100%" onPress={() => next()}>
+                <Text color="#f2f2f7">Historia da Doença</Text>
+            </Button>
+        </Footer>
     </Fragment>
 );
 

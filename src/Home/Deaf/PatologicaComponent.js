@@ -12,10 +12,13 @@ import {
 } from '../HomeStyle'
 
 import {
-    Wrapper, Button, Text, Row,
+    Wrapper, Footer, Button, Text, Row, Card,
 } from '../../styles'
 
 import Icon from 'react-native-vector-icons/Feather'
+
+const buttonLabelVoltar = 'Voltar'
+const buttonLabelAvancar = 'Avancar'
 
 class PatologicaComponent extends Component {
 
@@ -31,16 +34,18 @@ class PatologicaComponent extends Component {
 
     next = () => {
         const { step } = this.state;
-        this.setState({
-            step: step + 1
-        })
+        if (step <= 9) {
+            this.setState({
+                step: step + 1
+            })
+        }
     }
 
     prev = () => {
         const { step } = this.state;
         if (step >= 1) {
             this.setState({
-                step: step -1
+                step: step - 1
             })
         }
     }
@@ -51,223 +56,124 @@ class PatologicaComponent extends Component {
         switch(step) {
           case 0:
             return (
-                <Fragment>
-                    <Text size="22px">Doenças infecciosas e parasitarias</Text>
+                <Card>
+                    <Text size="18px">Doenças infecciosas e parasitarias</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
           case 1:
             return (
-                <Fragment>
-                    <Text size="22px">Doenças alérgicas</Text>
+                <Card>
+                    <Text size="18px">Doenças alérgicas</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
           case 2:
             return (
-                <Fragment>
-                    <Text size="22px">Doença sexualmente transmissível</Text>
+                <Card>
+                    <Text size="18px">Doença sexualmente transmissível</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 3:
             return (
-                <Fragment>
-                    <Text size="22px">Doenças comuns na infância</Text>
+                <Card>
+                    <Text size="18px">Doenças comuns na infância</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 4:
             return (
-                <Fragment>
-                    <Text size="22px">Intoxicações</Text>
+                <Card>
+                    <Text size="18px">Intoxicações</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 5:
             return (
-                <Fragment>
-                    <Text size="22px">Doenças psíquicas</Text>
+                <Card>
+                    <Text size="18px">Doenças psíquicas</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 6:
             return (
-                <Fragment>
-                    <Text size="22px">Intervenções cirúrgicas</Text>
+                <Card>
+                    <Text size="18px">Intervenções cirúrgicas</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 7:
             return (
-                <Fragment>
-                    <Text size="22px">Traumas</Text>
+                <Card>
+                    <Text size="18px">Traumas</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 8:
             return (
-                <Fragment>
-                    <Text size="22px">Diabetes Mellitus</Text>
+                <Card>
+                    <Text size="18px">Diabetes Mellitus</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 9:
             return (
-                <Fragment>
-                    <Text size="22px">Hipertensão arterial</Text>
+                <Card>
+                    <Text size="18px">Hipertensão arterial</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
         case 10:
             return (
-                <Fragment>
-                    <Text size="22px">Outras Patologias</Text>
+                <Card>
+                    <Text size="18px">Outras Patologias</Text>
                     <View style={{ width: 5, height: 5 }} />
                     
                     <Row>
                         <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
                     </Row>
-
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">Voltar para anterios</Text>
-                        </Button>
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">Ir para próximo</Text>
-                        </Button>
-                    </Row>
-                </Fragment>
+                </Card>
             )
           default: 
               return (
@@ -279,16 +185,34 @@ class PatologicaComponent extends Component {
     render() {
         const { step } = this.state;
         return (
-            <Wrapper>
-                { this.renderItem() }
-                <Row>
-                    <Text>Passo {step} de 10</Text>
-                </Row>
-                <View style={{ height: 80 }} />
-                <Button onPress={() => this.props.next()}>
-                    <Text color="#f2f2f7">História fisiológica</Text>
-                </Button>
-            </Wrapper>
+            <ScrollView>
+                <Wrapper>
+                    { this.renderItem() }
+                </Wrapper>
+
+                <Footer>
+                    <Row justify="flex-start">
+                        <Text>Passo {step} de 10</Text>
+                    </Row>
+                    
+                    <Row justify="space-between">
+                        <Button onPress={() => this.prev()}>
+                            <Text color="#f2f2f7">{ buttonLabelVoltar }</Text>
+                        </Button>
+
+                        <Button onPress={() => alert('gerar relatorio')}>
+                            <Text color="#f2f2f7">Acabar</Text>
+                        </Button>
+
+
+                        <Button onPress={() => this.next()}>
+                            <Text color="#f2f2f7">{ buttonLabelAvancar }</Text>
+                        </Button>
+                    </Row>
+
+                    <View style={{ height: 5 }} />
+                </Footer>
+            </ScrollView>
         )
     }
 }
