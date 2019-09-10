@@ -17,6 +17,7 @@ import {
     Wrapper, Footer, Row, TextInput, Button, Text
 } from '../../styles'
 
+const colors = ['#447260', '#427676', '#84BFA8', '#3F9A82']
 
 const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo }) => (
     <Fragment>
@@ -91,7 +92,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo 
                 <ScrollView style={{ maxHeight: 250, }}>
                     <Row>
                     {queixas.map((queixa, index) => (
-                        <Chip key={index}>
+                        <Chip key={index} color={colors[Math.floor(Math.random() * 3)]}>
                             <>
                             {/* <Icon name="chevron-right" size={22} /> */}
                             <Text size="18px" color="#f2f2f2">{queixa}</Text>

@@ -58,7 +58,7 @@ class DeafScreen extends Component {
         queixaInput: '',
         duracaoSlider: 0,
         frequenciaPicker: '',
-        intensidadeSlider: 1,
+        intensidadeSlider: 0,
         situacao: false,
       }
 
@@ -100,7 +100,7 @@ class DeafScreen extends Component {
 
     getDuracao = (duracao) => {
       this.setState({
-        duracaoSlider: duracao,
+        duracaoSlider: parseInt(duracao),
       })
     }
 

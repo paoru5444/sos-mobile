@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 
 import {
-  WrapperHome, Footer, CardHome, RowHome, Text,
+  WrapperHome, CardHome, RowHome,
 } from '../styles'
 
 class HomeScreen extends Component {

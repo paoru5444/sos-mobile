@@ -6,8 +6,8 @@ import {
 import AsyncStorage from '@react-native-community/async-storage'
 
 import {
-  Wrapper, Card, CardImage, CardRow, Text
-} from '../Home/HomeStyle'
+  Wrapper, Row, Text
+} from '../styles'
 
 class DoctorScreen extends Component {
     constructor(props)  {
@@ -15,7 +15,7 @@ class DoctorScreen extends Component {
     }
 
     static navigationOptions = {
-      title: 'Atendimento',
+      title: 'Relatório',
     };
 
     state = {}
@@ -29,9 +29,37 @@ class DoctorScreen extends Component {
         <Fragment>
           <Wrapper>
             <View style={{ height: 15 }} />
-              <Text>
-                Médico
-              </Text>
+              <Row justify="flex-start">
+                <Text size={22}> Queixas: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}> Duração:  </Text>
+              </Row>
+              
+              <Row justify="flex-start">
+                <Text size={22}>Constância: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}>Frequência: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}>Intensidade: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}>Melhora ou Piora: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}>Como está agora: </Text>
+              </Row>
+
+              <Row justify="flex-start">
+                <Text size={22}>Fatores associados: </Text>
+              </Row>
           </Wrapper>
         </Fragment>
       );
