@@ -5,32 +5,53 @@ const { width, height } = Dimensions.get('screen')
 
 // Componentes próprios baseados nos componentes react.
 export const Text = styled.Text`
-  font-size: 16px;
-  color: #333;
-  align-self: flex-start;
-  color: ${props => props.color || "#333"}
+  font-size: 12px;
+  align-self: center;
+  color: ${props => props.color || "##2c2c2c"}
 `
 
-export const ButtonField = styled.View`
-  width: ${width - 100};
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
-`
-
-export const SignInField = styled.KeyboardAvoidingView`
-  display: flex;
+export const Wrapper = styled.View`
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  width: ${width -100};
-  padding-top: 50px;
 `
-export const TextInput = styled.TextInput`
-  width: ${width - 100};
-  height: 45px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 23px 41px rgba(0, 0, 0, 0.1);
-  elevation: 5;
+export const Row = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+`
+
+export const RowInput = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+  background-color: #f2f2f7;
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
+`
+
+export const Input = styled.TextInput`
+  width: 80%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+`
+
+export const Button = styled.TouchableHighlight`
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  background-color:${props => props.transparent || '#216583'};
+  border-color: ${props => props.outlined || 'transparent'}
+  border-width: ${props => props.border || 0}
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
 `

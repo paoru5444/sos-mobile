@@ -4,6 +4,7 @@ import AuthLoadingScreen from './Auth/AuthLoadingScreen'
 
 import SignInScreen from './Auth/SignInScreen'
 import ResetPasswordScreen from './Auth/ResetPasswordScreen'
+import RegisterScreen from './Auth/RegisterScreen'
 
 import HomeScreen from './Home/HomeScreen'
 import Detalhes from './Home/Deaf/Historia/Detalhes'
@@ -18,7 +19,11 @@ const AppStack = createStackNavigator({
   Detalhes: Detalhes
 });
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen, Reset: ResetPasswordScreen });
+const AuthStack = createStackNavigator({
+  SignIn: SignInScreen,
+  Reset: ResetPasswordScreen,
+  Register: RegisterScreen,
+});
 
 export default createAppContainer(createSwitchNavigator(
   {

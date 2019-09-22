@@ -1,13 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import {
-  View
+  View, TextInput,
 } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
 import {
-  Wrapper, Row, Text
+  Row, Text
 } from '../styles'
+
+import styled from 'styled-components'
+
+const Wrapper = styled(View)`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+`
 
 class DoctorScreen extends Component {
     constructor(props)  {

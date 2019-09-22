@@ -1,47 +1,66 @@
 import React, { Component } from 'react'
-import { View, Button, Dimensions, TouchableHighlight } from 'react-native'
+import { View, Dimensions, TouchableHighlight } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
+import { 
+  Text,
+} from './AuthStyle'
 
+import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native'
 
-const { width, height } = Dimensions.get('screen')
+import Icon from 'react-native-vector-icons/Feather'
 
-// Componentes próprios baseados nos componentes react.
-const Text = styled.Text`
-  font-size: 16px;
-  color: #333;
-  align-self: flex-start;
-  color: ${props => props.color || "#333"}
-`
-
-const ButtonField = styled.View`
-  width: ${width - 100};
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
-`
-
-const SignInField = styled.KeyboardAvoidingView`
-  display: flex;
+const Wrapper = styled.View`
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  width: ${width -100};
-  padding-top: 150px;
 `
-const TextInput = styled.TextInput`
-  width: ${width - 100};
-  height: 45px;
-  border-color: #707070;
-  border-width: 0.5px;
-  border-radius: 5px;
-  margin-top: 10px;
+const Row = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 10px;
 `
+
+const RowInput = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+  background-color: #f2f2f7;
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
+`
+
+const Input = styled.TextInput`
+  width: 80%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+`
+
+const Button = styled.TouchableHighlight`
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  background-color:${props => props.transparent || '#216583'};
+  border-color: ${props => props.outlined || 'transparent'}
+  border-width: ${props => props.border || 0}
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
+`
+
 
 // Esquema de validação definido com mensagens
 const ResetPasswordShemma = yup.object().shape({
@@ -72,36 +91,43 @@ class ResetPasswordScreen extends Component {
 
     render() {
       return (
-        // Framework para criação e gerenciamento de formulários
-        <Formik
-          initialValues={{ email: '' }}
-          onSubmit={values => this.resetAsync(values)}
-          validationSchema={ResetPasswordShemma}
-        >
-          {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
-            <SignInField behavior="padding" enabled>
-              <Text>Digite seu email para sabermos que é você.</Text>
-              <TextInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder="meuemail@gmail.com"
-              />
-              { errors.email && touched.email && (
-                <Text color="#e74c3c">{errors.email}</Text>
-              )}
+        <Wrapper>
+          <Formik
+            initialValues={{ email: '' }}
+            onSubmit={values => this.resetAsync(values)}
+            validationSchema={ResetPasswordShemma}
+          >
+            {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
+              <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <Row>
+                  <Text color="#f2f2f7">Digite seu email para sabermos que é você.</Text>
+                </Row>
 
-              <ButtonField>
-                <Button
-                  color="#27ae60"
-                  title="Enviar email"
-                  accessibilityLabel="Solicitar troca de email"
-                  onPress={handleSubmit}
-                />
-              </ButtonField>
-            </SignInField>
-          )}
-        </Formik>
+                <RowInput>
+                  <Icon name="mail" size={24} color="#BDBDBD" />
+                  <Input
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    placeholder="sos@libras.com.br"
+                  />
+                </RowInput>
+
+                <Row>
+                  { errors.email && touched.email && (
+                    <Text color="#e74c3c">{errors.email}</Text>
+                  )}
+                </Row>
+                
+                <Row>
+                  <Button onPress={handleSubmit}>
+                    <Text color="#f2f2f7">Recuperar Senha</Text>
+                  </Button>
+                </Row>
+              </LinearGradient>
+            )}
+          </Formik>
+        </Wrapper>
       );
     }
 }

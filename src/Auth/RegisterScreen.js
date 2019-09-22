@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { TouchableHighlight } from 'react-native'
+import { View, TextInput, TouchableHighlight } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -28,8 +28,6 @@ const SignInSchemma = yup.object().shape({
 class SignInScreen extends Component {
     constructor(props)  {
       super(props)
-
-      this.password = React.createRef()
     }
 
     static navigationOptions = {
@@ -40,31 +38,13 @@ class SignInScreen extends Component {
       email: '',
       password: ''
     }
-
-    signIn = async (values) => {
-      // await AsyncStorage.setItem('userToken', 'abc');
-      // this.props.navigation.navigate('App');
-
-      try {
-        // const response = await Server.post('/login', values, "")
-        // const token = response.data.token;
-        await AsyncStorage.setItem('userToken', 'abc');
-        this.props.navigation.navigate('App');
-      } catch(error) {
-        console.log(error)
-      }
-    };
-
-    goTo(route = '', params = {}) {
-      this.props.navigation.navigate(route, params)
-    }
   
     render() {
       return (
         <Wrapper>
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={values => this.signIn(values)}
+            onSubmit={values => this._signInAsync(values)}
             validationSchema={SignInSchemma}
           >
             {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
@@ -74,8 +54,6 @@ class SignInScreen extends Component {
                   <Input
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
-                    onEndEditing={() => this.password.focus()}
-                    returnKeyType="next"
                     value={values.email}
                     placeholder="sos@libras.com.br"
                   />
@@ -90,7 +68,6 @@ class SignInScreen extends Component {
                 <RowInput>
                   <Icon name="key" size={24} color="#BDBDBD" />
                   <Input
-                    ref={password => this.password = password}
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
                     value={values.password}
@@ -106,22 +83,11 @@ class SignInScreen extends Component {
                     <Text color="#e74c3c">{errors.password}</Text>
                   )}
                 </Row>
+                
 
                 <Row>
                   <Button onPress={handleSubmit}>
-                    <Text color="#f2f2f7">Entrar</Text>
-                  </Button>
-                </Row>
-
-                <Row>
-                  <TouchableHighlight onPress={() => this.goTo('Reset')}>
-                    <Text color="#f2f2f7">Esqueci minha senha</Text>
-                  </TouchableHighlight>
-                </Row>
-
-                <Row style={{ marginTop: 40 }}>
-                  <Button onPress={() => this.goTo('Register')} transparent="transparent" outlined="#f2f2f7" border="1px">
-                    <Text color="#f2f2f7">Cadastre-se</Text>
+                    <Text color="#f2f2f7">Finalizar Cadastro</Text>
                   </Button>
                 </Row>
               </LinearGradient>
@@ -130,6 +96,24 @@ class SignInScreen extends Component {
         </Wrapper>
       );
     }
+
+    goTo(route = "") {
+      this.props.navigation.navigate(route)
+    }
+  
+    _signInAsync = async (values) => {
+      // await AsyncStorage.setItem('userToken', 'abc');
+      // this.props.navigation.navigate('App');
+
+      try {
+        // const response = await Server.post('/login', values, "")
+        // const token = response.data.token;
+        await AsyncStorage.setItem('userToken', 'abc');
+        this.props.navigation.navigate('App');
+      } catch(error) {
+        console.log(error)
+      }
+    };
 }
 
 export default SignInScreen;

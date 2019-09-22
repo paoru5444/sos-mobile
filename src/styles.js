@@ -59,18 +59,17 @@ export const TextInput = styled.TextInput`
   elevation: 1;
 `
 
-export const WrapperHome = styled.View`
-  background-color: #fff;
+export const WrapperHome = styled.ImageBackground`
+  width: ${ width };
+  height: ${height};
   align-items: center;
   justify-content: center;
-  width: ${ width };
-  height: ${height * (82 / 100)};
 `
 
 export const CardHome = styled.TouchableHighlight`
-  width: 250px;
+  width: 200px;
   height: 250px;
-  background-color: transparent;
+  background-color: rgba(242, 242, 247, 0.3);
   justify-content: center;
   align-items: center;
   border-top-left-radius: 125px;
@@ -84,7 +83,6 @@ export const RowHome = styled.View`
   flex-direction: row;
   alignItems: center;
   justify-content: ${props => props.justify || 'center'};
-  flex-wrap: wrap;
   width: ${width};
   height: auto;
   margin-top: 5px;
