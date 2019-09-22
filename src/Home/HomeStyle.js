@@ -4,17 +4,38 @@ import styled from 'styled-components/native'
 const { width, height } = Dimensions.get('screen')
 
 export const Wrapper = styled.View`
-  width: ${ width };
-  height: ${ height * (80 / 100) };
-  background-color: #fff;
+  width: 100%;
+  height: 85%;
+  background-color: #f2f2f7;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: ${ props => props.justify || 'flex-start'};
+`
+
+export const Footer = styled.View`
+  width: 100%;
+  height: 15%;
+  background-color: #f2f2f7;
+  align-items: center;
+  justify-content: center;
+`
+
+export const Button = styled.TouchableHighlight`
+  width: ${ props => props.width|| '80%'};
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  background-color:${props => props.transparent || '#216583'};
+  border-color: ${props => props.outlined || 'transparent'}
+  border-width: ${props => props.border || 0}
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
 `
 
 export const Card = styled.TouchableHighlight`
   width: ${ width * (95 / 100) };
   height: ${ height * (15 / 100) };
-  background-color: #2980b9;
+  background-color: #00818a;
   flex-wrap: wrap;
 `
 export const CardImage = styled.View`
@@ -22,6 +43,9 @@ export const CardImage = styled.View`
   height: ${ height * (15 / 100) };
   background-color: #eee;
 `
+
+
+
 
 
 export const CardRow = styled.View`
@@ -34,9 +58,9 @@ export const CardRow = styled.View`
 `
 
 export const Text = styled.Text`
-  color:${props => props.color || "#333"};
+  color:${props => props.color || "#2c2c2c"};
   font-size: ${props => props.size || '16px'};
-  align-self: flex-start;
+  align-self: center;
 `
 
 export const TextInput = styled.TextInput`
@@ -47,9 +71,12 @@ export const TextInput = styled.TextInput`
 `
 
 export const Row = styled.View`
+  width: 100%;
   flex-direction: row;
-  alignItems: center;
-  flex-wrap: wrap;
+  justify-content: ${ props => props.justify || 'center'};
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
 `
 
 export const Queixas = styled.View`
@@ -66,12 +93,14 @@ export const QueixaField = styled.View`
 `
 
 export const CardQueixa = styled.TouchableOpacity`
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   justify-content: center;
   align-items: center;
-  background-color: grey;
-  border-radius: 50px;
+  background-color: #eee;
+  border-radius: 60px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  elevation: 1;
 `
 
 export const Chip = styled.TouchableHighlight`

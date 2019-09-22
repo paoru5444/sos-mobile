@@ -1,31 +1,31 @@
 import React, { Fragment } from 'react'
-import {
-  View,
-} from 'react-native'
-
 import { 
-  TouchableOpacity, ScrollView,
+  TouchableOpacity, ScrollView, View,
 } from 'react-native'
 
 import {
-  Queixas, CardQueixa, Chip,
+  Button, Footer, Text, Wrapper, Queixas, CardQueixa, Chip, Row
 } from '../HomeStyle'
 
-import Icon from 'react-native-vector-icons/Feather'
-
 import {
-    Wrapper, Footer, Row, TextInput, Button, Text
-} from '../../styles'
+  RowInput, Input,
+} from '../../Auth/AuthStyle'
 
-const colors = ['#447260', '#427676', '#84BFA8', '#3F9A82']
+import Icon from 'react-native-vector-icons/Feather'
+import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
+
+// const colors = ['#447260', '#427676', '#84BFA8', '#3F9A82']
+const colors = ['#f7be16']
 
 const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo }) => (
     <Fragment>
         <Wrapper>
-        <View style={{ height: 10, }} />
-            <ScrollView horizontal style={{ maxHeight: 120}}>
-
-            <View style={{ width: 5, }} />
+          <Row>
+            <Text>Atendimento Rápido</Text>
+            <IconMCommunity name="truck-fast" size={24} color="#293462" />
+          </Row>
+          <Row>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <CardQueixa onPress={() => goTo('Detalhes')}>
                     <Text>teste</Text>
                 </CardQueixa>
@@ -61,51 +61,40 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo 
                 </CardQueixa>
                 <View style={{ width: 5 }} />
             </ScrollView>
-            
-            <View style={{ height: 20 }} />
-            
-            <Row justify="flex-start">
-                <Text size="18px">O que sentir para vir aqui?</Text>
-                <View style={{ width: 5, height: 5 }} />
-                <TextInput onChangeText={(text) => getQueixaInput(text)} />
-            </Row>
+          </Row>
 
-            <View style={{ width: 5, height: 10 }} />
+          <RowInput>
+            <Icon name="frown" size={24} color="#BDBDBD" />
+            <Input placeholder="O que sentir para vir aqui?" onChangeText={(text) => getQueixaInput(text)} />
+          </RowInput>
 
             <Row>
-                <TouchableOpacity onPress={() => adicionarQueixa()}>
-                    <Row justify="flex-start">
-                        <Text size="18px">Adicionar Queixa</Text>
-                        <View style={{ width: 5 }} />
-                        <Icon name="plus-square" size={30} color="#333" />
-                    </Row>
-                </TouchableOpacity>
-            </Row>
-
-            <Row justify="flex-start">
-                <View style={{ height: 60 }} />
-                <Text size="18px">O eu já falei:</Text>
+              <Button width="85%" onPress={() => adicionarQueixa()} transparent="transparent" outlined="#216583" border="1px">
+                <Row>
+                  <Text color="#216583">Adicionar Queixa</Text>
+                  <Icon name="plus" size={26} color="#00818a" />
+                </Row>
+              </Button>
             </Row>
 
             <Queixas>
-                <View style={{ height: 20 }} />
-                <ScrollView style={{ maxHeight: 250, }}>
-                    <Row>
-                    {queixas.map((queixa, index) => (
-                        <Chip key={index} color={colors[Math.floor(Math.random() * 3)]}>
-                            <>
-                            {/* <Icon name="chevron-right" size={22} /> */}
-                            <Text size="18px" color="#f2f2f2">{queixa}</Text>
-                            </>
-                        </Chip>
-                    ))}
-                    </Row>
-                </ScrollView>
+              <ScrollView style={{ maxHeight: 250, }}>
+                  <Row>
+                  {queixas.map((queixa, index) => (
+                    <Chip key={index} color={colors[Math.floor(Math.random() * 3)]}>
+                      <>
+                      {/* <Icon name="chevron-right" size={22} /> */}
+                      <Text size="18px" color="#f2f2f2">{queixa}</Text>
+                      </>
+                    </Chip>
+                  ))}
+                  </Row>
+              </ScrollView>
             </Queixas>     
         </Wrapper>
         
         <Footer>
-            <Button radius="0" width="100%" height="100%" onPress={() => next()}>
+            <Button onPress={() => next()}>
                 <Text color="#f2f2f7">Historia da Doença</Text>
             </Button>
         </Footer>

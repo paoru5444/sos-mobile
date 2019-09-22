@@ -1,10 +1,7 @@
 import React, { Fragment, Component } from 'react'
-import {
-  View,
-} from 'react-native'
 
 import { 
-  TouchableOpacity, ScrollView,
+   ScrollView, View,
 } from 'react-native'
 
 import {
@@ -12,10 +9,19 @@ import {
 } from '../HomeStyle'
 
 import {
-    Wrapper, Footer, Button, Text, Row, Card,
+  Card,
 } from '../../styles'
 
+import {
+  Button, Footer, Text, Wrapper, Row
+} from '../HomeStyle'
+
+import {
+  RowInput, Input,
+} from '../../Auth/AuthStyle'
+
 import Icon from 'react-native-vector-icons/Feather'
+import Slideshow from 'react-native-image-slider-show';
 
 const buttonLabelVoltar = 'Voltar'
 const buttonLabelAvancar = 'Avancar'
@@ -56,14 +62,25 @@ class PatologicaComponent extends Component {
         switch(step) {
           case 0:
             return (
-                <Card>
-                    <Text size="18px">Doenças infecciosas e parasitarias</Text>
-                    <View style={{ width: 5, height: 5 }} />
-                    
-                    <Row>
-                        <TextInput onChangeText={(text) => this.setState({ queixaInput: text })} />
-                    </Row>
-                </Card>
+             <Wrapper justify="center">
+                <Row>
+                  <Slideshow 
+                      dataSource={[
+                        { url:'http://placeimg.com/640/480/any' },
+                        { url:'http://placeimg.com/640/480/any' },
+                        { url:'http://placeimg.com/640/480/any' }
+                    ]}/>
+                </Row>
+
+                <Row>
+                  <Text>Doenças infecciosas e parasitarias</Text>
+                </Row>
+            
+                <RowInput>
+                  <Icon name="activity" size={26} color="#216583" />
+                  <Input placeholder="Falar da doença" onChangeText={(text) => this.setState({ queixaInput: text })} />
+                </RowInput>
+             </Wrapper>
             )
           case 1:
             return (
@@ -183,37 +200,32 @@ class PatologicaComponent extends Component {
       }
 
     render() {
-        const { step } = this.state;
-        return (
-            <ScrollView>
-                <Wrapper>
-                    { this.renderItem() }
-                </Wrapper>
+      const { step } = this.state;
+      return (
+        <Fragment>
+          <Wrapper>
+              { this.renderItem() }
+          </Wrapper>
 
-                <Footer>
-                    <Row justify="flex-start">
-                        <Text>Passo {step} de 10</Text>
-                    </Row>
-                    
-                    <Row justify="space-between">
-                        <Button onPress={() => this.prev()}>
-                            <Text color="#f2f2f7">{ buttonLabelVoltar }</Text>
-                        </Button>
+          <Footer>
+            <Text>Passo {step} de 10</Text>
+            
+            <Row justify="space-around">
+              <Button width="25%" onPress={() => this.prev()}>
+                  <Text color="#f2f2f7">{ buttonLabelVoltar }</Text>
+              </Button>
 
-                        <Button onPress={() => alert('gerar relatorio')}>
-                            <Text color="#f2f2f7">Acabar</Text>
-                        </Button>
+              <Button  width="25%" onPress={() => alert('gerar relatorio')}>
+                  <Text color="#f2f2f7">Acabar</Text>
+              </Button>
 
-
-                        <Button onPress={() => this.next()}>
-                            <Text color="#f2f2f7">{ buttonLabelAvancar }</Text>
-                        </Button>
-                    </Row>
-
-                    <View style={{ height: 5 }} />
-                </Footer>
-            </ScrollView>
-        )
+              <Button  width="25%" onPress={() => this.next()}>
+                  <Text color="#f2f2f7">{ buttonLabelAvancar }</Text>
+              </Button>
+            </Row>
+          </Footer>
+        </Fragment>
+      )
     }
 }
 

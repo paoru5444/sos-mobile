@@ -14,12 +14,19 @@ import PatologicaComponent from './PatologicaComponent'
 
 class DeafScreen extends Component {
 
-    static navigationOptions = ({navigation}) => {
-      return {
-        title: 'Anamnese'
-      }
+  static navigationOptions = ({navigation}) => {
+    
+    return {
+      title: 'Anamnese',
+      headerTintColor: '#f2f2f7',
+      headerStyle: {
+        backgroundColor: '#215583'
+      },
+      headerTitleStyle: {
+        color: '#f2f2f7',
+      },
     }
-
+  }
     choseTitle() {
       const { step } = this.state;
       
