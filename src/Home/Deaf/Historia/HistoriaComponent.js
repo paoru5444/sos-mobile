@@ -38,7 +38,7 @@ const QueixaComponent = ({
           />
         </Row>
 
-        <Row>
+        <Row >
           <Text>
               Intensidade: 
               { intensidadeSlider === 0 && 'Baixa' ||

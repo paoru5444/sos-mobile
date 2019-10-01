@@ -5,25 +5,27 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage'
 
-import {
-  WrapperHome, CardHome, RowHome,
-} from '../styles'
+// Componentes
+import { Button, ButtonOutlined } from '../common/Button'
+import { Text } from '../common/Text'
+
 
 import LinearGradient from 'react-native-linear-gradient';
-import styled from 'styled-components'
+import styled from 'styled-components/native'
 
-const Wrapper = styled(View)`
+const Wrapper = styled.View`
   width: 100%;
   height: 100%;
   align-items: center;
   justify-content: center;
 `
 
-const Row = styled(View)`
-  width: 85%;
+const Row = styled.View`
+  width: 70%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
+  margin-bottom: 20px;
 `
 
 class HomeScreen extends Component {
@@ -44,28 +46,20 @@ class HomeScreen extends Component {
   
     render() {
       return (
-        // background-image: linear-gradient(-225deg, #22E1FF 0%, #1D8FE1 48%, #625EB1 100%);
           <Wrapper source={require('../../assets/images/Home/fundo.jpg')}>
             <LinearGradient colors={['#216583', '#217e83']} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 300, height: 300, elevation: 4, }} />
               <Row>
-                <TouchableHighlight onPress={() => this.goTo('Doctor')}>
-                  <Image source={require('../../assets/images/Home/doctor.png')} style={{ width: 180, height: 180, }}/>
-                </TouchableHighlight>
-       
-                <TouchableHighlight onPress={() => this.goTo('AuthLoading')}>
-                  <Image source={require('../../assets/images/Home/injury.png')} style={{ width: 180, height: 180, }}/>
-                </TouchableHighlight>
+                <Button background="#3F51B5" onPress={() => this.goTo('Deaf')}>
+                  <Text>Atendimento</Text>
+                </Button>
               </Row>
-              
-              {/* <RowHome>
-                  <CardHome align="flex-start" rotate="rotate(180deg)" onPress={() => this.goTo('Doctor')}>
-                    <Image source={require('../../assets/images/Home/doctor.png')} style={{ width: 150, height: 150, transform: [{ rotate: '180deg'}], }}/>
-                  </CardHome>
 
-                  <CardHome onPress={() => this.goTo('AuthLoading')}>
-                  <Image source={require('../../assets/images/Home/injury.png')} style={{ width: 150, height: 150, right: 20,}}/>
-                  </CardHome>
-                </RowHome> */}
+              <Row>
+                <ButtonOutlined onPress={() => this.goTo('Auth')}>
+                  <Text color="">Login</Text>
+                </ButtonOutlined>
+              </Row>
             </LinearGradient>
           </Wrapper>
       );

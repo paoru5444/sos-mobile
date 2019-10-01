@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Dimensions, TouchableHighlight } from 'react-native'
+import { Image } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -99,6 +99,8 @@ class ResetPasswordScreen extends Component {
           >
             {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
               <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200, elevation: 4, }} />
+                
                 <Row>
                   <Text color="#f2f2f7">Digite seu email para sabermos que é você.</Text>
                 </Row>

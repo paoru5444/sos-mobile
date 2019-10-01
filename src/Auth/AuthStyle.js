@@ -17,7 +17,7 @@ export const Wrapper = styled.View`
   justify-content: center;
 `
 export const Row = styled.View`
-  width: 85%;
+  width: 80%;
   align-items: center;
   justify-content: center;
   flex-direction: row;
@@ -25,7 +25,7 @@ export const Row = styled.View`
 `
 
 export const RowInput = styled.View`
-  width: 85%;
+  width: 80%;
   align-items: center;
   justify-content: center;
   flex-direction: row;
