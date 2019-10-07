@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { Button, ButtonOutlined } from '../common/Button'
 import { Text } from '../common/Text'
 
+import SuccessAlert from '../common/Alerts/Success'
 
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native'
@@ -37,6 +38,9 @@ class HomeScreen extends Component {
 
     constructor(props)  {
       super(props)
+
+      this.successAlert = React.createRef()
+      this.getSuccessAlertRef = this.getSuccessAlertRef.bind(this)
     }
 
     static navigationOptions = {
@@ -51,14 +55,19 @@ class HomeScreen extends Component {
     }
 
     logout = async () => {
-      await AsyncStorage.removeItem('userToken')
-      this.props.navigation.navigate('App')
+      this.successAlert.alertWithType('success', 'Você deslogou do sistema', '', setTimeout(() => {AsyncStorage.removeItem('userToken')}, 1000))
+      this.setState({ userToken: '' })
     }
   
+    getSuccessAlertRef = (ref) => { this.successAlert = ref }
+
     render() {
       const { userToken } = this.state;
 
       return (
+        <>
+          <SuccessAlert getSuccessAlertRef={this.getSuccessAlertRef} />
+
           <Wrapper source={require('../../assets/images/Home/fundo.jpg')}>
             <LinearGradient colors={['#216583', '#217e83']} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 300, height: 300, }} />
@@ -75,6 +84,7 @@ class HomeScreen extends Component {
               </Row>
             </LinearGradient>
           </Wrapper>
+        </>
       );
     }
   

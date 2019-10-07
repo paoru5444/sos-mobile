@@ -12,6 +12,7 @@ import {
 } from './AuthStyle'
 
 import ErrorAlert from '../common/Alerts/Error'
+import SuccessAlert from '../common/Alerts/Success'
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -38,7 +39,10 @@ class RegisterScreen extends Component {
       this.password = React.createRef()
 
       this.errorAlert = React.createRef()
+      this.successAlert = React.createRef()
+
       this.getAlertRef = this.getAlertRef.bind(this)
+      this.getSuccessAlertRef = this.getSuccessAlertRef.bind(this)
     }
 
     static navigationOptions = {
@@ -59,14 +63,16 @@ class RegisterScreen extends Component {
     register = async (values) => {
       try {
         this.setState({ registerRequest: true })
+
         const response = await api.post('/register', values)
 
         const token = response.data.token;
 
         await AsyncStorage.setItem('userToken', token);
 
-        this.props.navigation.navigate('App');
         this.setState({ registerRequest: false })
+
+        this.successAlert.alertWithType('success', 'Cadastro realizado com sucesso', 'Você será redirecionado para a tela inicial', setTimeout(() => {this.props.navigation.navigate('App')}, 3000))
       } catch(error) {
         this.errorAlert.alertWithType('error', 'Erro ao registrar!', error.response.data.error)
 
@@ -74,12 +80,14 @@ class RegisterScreen extends Component {
       }
     };
 
+    getSuccessAlertRef = (ref) => { this.successAlert = ref }
     getAlertRef = (ref) => { this.errorAlert = ref }
   
     render() {
       const { registerRequest } = this.state
       return (
         <>
+          <SuccessAlert getSuccessAlertRef={this.getSuccessAlertRef} />
           <ErrorAlert getAlertRef={this.getAlertRef} />
 
           <Wrapper>

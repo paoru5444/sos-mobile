@@ -12,6 +12,7 @@ import {
 } from './AuthStyle'
 
 import ErrorAlert from '../common/Alerts/Error'
+import SuccessAlert from '../common/Alerts/Success'
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -33,8 +34,12 @@ class SignInScreen extends Component {
       super(props)
 
       this.password = React.createRef()
+      
       this.errorAlert = React.createRef()
+      this.successAlert = React.createRef()
+      
       this.getAlertRef = this.getAlertRef.bind(this)
+      this.getSuccessAlertRef = this.getSuccessAlertRef.bind(this)
     }
 
     static navigationOptions = {
@@ -48,10 +53,12 @@ class SignInScreen extends Component {
     }
 
     getAlertRef = (ref) => { this.errorAlert = ref }
+    getSuccessAlertRef = (ref) => { this.successAlert = ref }
 
     signIn = async (values) => {
       try {
         this.setState({ loginRequest: true })
+        
         const response = await api.post('/authenticate', values)
 
         const token = response.data.token;
@@ -59,7 +66,8 @@ class SignInScreen extends Component {
         await AsyncStorage.setItem('userToken', token);
         
         this.setState({ loginRequest: false })
-        this.props.navigation.navigate('App');
+
+        this.successAlert.alertWithType('success', 'Login realizado com sucesso', 'Você será redirecionado para a tela inicial', setTimeout(() => {this.props.navigation.navigate('App')}, 3000))
       } catch(error) {
         this.errorAlert.alertWithType('error', 'Erro de autenticação', error.response.data.error)
         
@@ -76,6 +84,7 @@ class SignInScreen extends Component {
       return (
         <>
           <ErrorAlert getAlertRef={this.getAlertRef} />
+          <SuccessAlert getSuccessAlertRef={this.getSuccessAlertRef} />
 
           <Wrapper>
             <Formik
