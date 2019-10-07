@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import Icon from 'react-native-vector-icons/Feather'
 
-import Server from '../Server';
+import api from '../server/api';
 
 // Esquema de validação definido com mensagens
 const SignInSchemma = yup.object().shape({
@@ -42,13 +42,13 @@ class SignInScreen extends Component {
     }
 
     signIn = async (values) => {
-      // await AsyncStorage.setItem('userToken', 'abc');
-      // this.props.navigation.navigate('App');
-
       try {
-        // const response = await Server.post('/login', values, "")
-        // const token = response.data.token;
-        await AsyncStorage.setItem('userToken', 'abc');
+        const response = await api.post('/authenticate', values)
+
+        const token = response.data.token;
+
+        await AsyncStorage.setItem('userToken', token);
+        
         this.props.navigation.navigate('App');
       } catch(error) {
         console.log(error)
@@ -69,7 +69,7 @@ class SignInScreen extends Component {
           >
             {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
               <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200, elevation: 4, }} />
+                <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200,}} />
 
                 <RowInput>
                   <Icon name="mail" size={24} color="#BDBDBD" />

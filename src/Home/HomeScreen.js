@@ -48,10 +48,10 @@ class HomeScreen extends Component {
       return (
           <Wrapper source={require('../../assets/images/Home/fundo.jpg')}>
             <LinearGradient colors={['#216583', '#217e83']} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 300, height: 300, elevation: 4, }} />
+              <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 300, height: 300, }} />
               <Row>
                 <Button background="#3F51B5" onPress={() => this.goTo('Deaf')}>
-                  <Text>Atendimento</Text>
+                  <Text>Usar sem cadastrar</Text>
                 </Button>
               </Row>
 
