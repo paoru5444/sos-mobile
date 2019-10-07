@@ -29,6 +29,12 @@ const Row = styled.View`
 `
 
 class HomeScreen extends Component {
+    async componentDidMount() {
+      this.setState({
+        userToken: await AsyncStorage.getItem('userToken')
+      })
+    }
+
     constructor(props)  {
       super(props)
     }
@@ -43,21 +49,28 @@ class HomeScreen extends Component {
     goTo = (route = "") => {
       this.props.navigation.navigate(route)
     }
+
+    logout = async () => {
+      await AsyncStorage.removeItem('userToken')
+      this.props.navigation.navigate('App')
+    }
   
     render() {
+      const { userToken } = this.state;
+
       return (
           <Wrapper source={require('../../assets/images/Home/fundo.jpg')}>
             <LinearGradient colors={['#216583', '#217e83']} style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 300, height: 300, }} />
               <Row>
                 <Button background="#3F51B5" onPress={() => this.goTo('Deaf')}>
-                  <Text>Usar sem cadastrar</Text>
+                  <Text>{!userToken ? 'Usar sem cadastrar' : 'Atendimento'}</Text>
                 </Button>
               </Row>
 
               <Row>
-                <ButtonOutlined onPress={() => this.goTo('Auth')}>
-                  <Text color="">Login</Text>
+                <ButtonOutlined onPress={() => !userToken ? this.goTo('Auth') : this.logout()}>
+                  <Text color="">{!userToken ? 'Login' : 'Sair'}</Text>
                 </ButtonOutlined>
               </Row>
             </LinearGradient>

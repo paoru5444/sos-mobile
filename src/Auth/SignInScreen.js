@@ -115,11 +115,11 @@ class SignInScreen extends Component {
                   </Button>
                 </Row>
 
-                <Row>
+                {/* <Row>
                   <TouchableHighlight onPress={() => this.goTo('Reset')}>
                     <Text color="#f2f2f7">Esqueci minha senha</Text>
                   </TouchableHighlight>
-                </Row>
+                </Row> */}
 
                 <Row style={{ marginTop: 40 }}>
                   <Button onPress={() => this.goTo('Register')} transparent="transparent" outlined="#f2f2f7" border="1px">

@@ -134,6 +134,15 @@ class DeafScreen extends Component {
     goTo(route = "") {
       this.props.navigation.navigate(route)
     }
+
+    makeAtendence = async () => {
+      // queixa: String,
+      // duracao: String,
+      // intensidade: String,
+      // frequencia: String,
+      // melhora_piora: String,
+      const { queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao } = this.state
+    }
   
     renderItem = () => {
       const { step, queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao } = this.state;
@@ -164,17 +173,9 @@ class DeafScreen extends Component {
               situacao={situacao}
             />
           )
-        case 2:
-          return (
-            <PatologicaComponent />
-          )
-        case 3:
-          return (
-            <Text>História Fisiológica</Text>
-          )
         default: 
             return (
-              <Text>Algo aconteceu.</Text>
+              <Text>Tela não encontrada.</Text>
             )
       }
     }
