@@ -78,6 +78,8 @@ class DeafScreen extends Component {
       this.getIntensidade = this.getIntensidade.bind(this)
       this.getSituacao = this.getSituacao.bind(this)
 
+      this.makeAtendence = this.makeAtendence.bind(this)
+
       this.goTo = this.goTo.bind(this)
     }
 
@@ -142,6 +144,11 @@ class DeafScreen extends Component {
       // frequencia: String,
       // melhora_piora: String,
       const { queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao } = this.state
+      console.log('queixas', queixas.join())
+      console.log('duracao', duracaoSlider)
+      console.log('duracao', frequenciaPicker)
+      console.log('intensidadeSlider', intensidadeSlider)
+      console.log('situacao', situacao)
     }
   
     renderItem = () => {
@@ -171,6 +178,7 @@ class DeafScreen extends Component {
               intensidadeSlider={intensidadeSlider}
               getSituacao={this.getSituacao}
               situacao={situacao}
+              makeAtendence={this.makeAtendence}
             />
           )
         default: 

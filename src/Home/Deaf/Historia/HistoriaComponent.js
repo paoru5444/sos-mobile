@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import {
-  View,
+  View, StyleSheet,
 } from 'react-native'
 
 import { 
@@ -8,28 +8,39 @@ import {
 } from 'react-native'
 
 import {
-  Button, Footer, Text, Wrapper, Row
+  Button, Footer, Text, Wrapper
 } from '../../HomeStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 import Slider from '@react-native-community/slider';
 
+import styled from 'styled-components/native'
+
+const Row = styled.View`
+  width: 80%;
+  align-self: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  margin-bottom: 15px
+`
+
 const QueixaComponent = ({
     next, getDuracao, duracaoSlider,
     getFrequencia, frequenciaPicker,
     getIntensidade, intensidadeSlider,
-    getSituacao, situacao
+    getSituacao, situacao, makeAtendence
 }) => (
   <Fragment>
     <Wrapper>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
         <Row>
           <Text>Duração: {duracaoSlider} {duracaoSlider === 1 ? 'dia' : 'dias'}</Text>
         </Row>
 
         <Row>
           <Slider
-            style={{width: '90%', height: 40}}
+            style={{width: '100%', height: 40}}
             minimumValue={1}
             maximumValue={30}
             minimumTrackTintColor="#004D40"
@@ -38,18 +49,18 @@ const QueixaComponent = ({
           />
         </Row>
 
-        <Row >
+        <Row>
           <Text>
               Intensidade: 
-              { intensidadeSlider === 0 && 'Baixa' ||
-                intensidadeSlider !== 0 && intensidadeSlider !== 2 && 'Media' ||
-                intensidadeSlider === 2 && 'Alta' }
+              { intensidadeSlider === 0 && ' Baixa' ||
+                intensidadeSlider !== 0 && intensidadeSlider !== 2 && ' Media' ||
+                intensidadeSlider === 2 && ' Alta' }
           </Text>
         </Row>
 
         <Row>
           <Slider
-              style={{width: '90%', height: 40}}
+              style={{width: '100%', height: 40}}
               minimumValue={0}
               maximumValue={2}
               minimumTrackTintColor="#004D40"
@@ -63,7 +74,7 @@ const QueixaComponent = ({
         </Row>
 
         <Row>
-          <Text size="20px">De: </Text>
+          <Text>De: </Text>
           <Picker
               selectedValue={frequenciaPicker}
               style={{height: 50, width: 100}}
@@ -75,7 +86,7 @@ const QueixaComponent = ({
               <Picker.Item label="4 horas" value={4} />
           </Picker>
               
-          <Text size="20px">Em: </Text>
+          <Text>Em: </Text>
           <Picker style={{height: 50, width: 100}} selectedValue={frequenciaPicker}>
               <Picker.Item label={frequenciaPicker + 'horas'} value={frequenciaPicker} />
           </Picker>
@@ -100,11 +111,19 @@ const QueixaComponent = ({
         </Wrapper>    
 
         <Footer>
-            <Button onPress={() => next()}>
-                <Text color="#f2f2f7">História patológica pregressa</Text>
+            <Button onPress={() => makeAtendence()}>
+                <Text color="#f2f2f7">Finalizar Atendimento</Text>
             </Button>
         </Footer>
   </Fragment>
 );
+
+const styles= StyleSheet.create({
+  scroll: {
+    width: '100%',
+    height: '100%',
+    paddingTop: 50,
+  }
+})
 
 export default QueixaComponent;

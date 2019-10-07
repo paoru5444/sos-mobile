@@ -20,14 +20,14 @@ export const Footer = styled.View`
 `
 
 export const Button = styled.TouchableHighlight`
-  width: ${ props => props.width|| '80%'};
+  width: ${ props => props.width|| '60%'};
   height: 60px;
   align-items: center;
   justify-content: center;
   background-color:${props => props.transparent || '#216583'};
   border-color: ${props => props.outlined || 'transparent'}
   border-width: ${props => props.border || 0}
-  border-radius: 30px;
+  border-radius: 26px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   elevation: 1;
 `
@@ -59,8 +59,9 @@ export const CardRow = styled.View`
 
 export const Text = styled.Text`
   color:${props => props.color || "#2c2c2c"};
-  font-size: ${props => props.size || '16px'};
+  font-size: ${props => props.size || '20px'};
   align-self: center;
+  font-weight: 600;
 `
 
 export const TextInput = styled.TextInput`
@@ -75,8 +76,9 @@ export const Row = styled.View`
   flex-direction: row;
   justify-content: ${ props => props.justify || 'center'};
   align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  padding: 0 20px 0 20px;
 `
 
 export const Queixas = styled.View`
