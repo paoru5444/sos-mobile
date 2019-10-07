@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Image } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage'
+import { DotIndicator } from 'react-native-indicators'
 
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -9,6 +10,8 @@ import * as yup from 'yup';
 import { 
   Button, Input, Text, Row, RowInput, Wrapper, 
 } from './AuthStyle'
+
+import ErrorAlert from '../common/Alerts/Error'
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -30,6 +33,12 @@ const SignInSchemma = yup.object().shape({
 class RegisterScreen extends Component {
     constructor(props)  {
       super(props)
+
+      this.email = React.createRef()
+      this.password = React.createRef()
+
+      this.errorAlert = React.createRef()
+      this.getAlertRef = this.getAlertRef.bind(this)
     }
 
     static navigationOptions = {
@@ -39,7 +48,8 @@ class RegisterScreen extends Component {
     state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      registerRequest: false,
     }
 
     goTo(route = "") {
@@ -48,6 +58,7 @@ class RegisterScreen extends Component {
   
     register = async (values) => {
       try {
+        this.setState({ registerRequest: true })
         const response = await api.post('/register', values)
 
         const token = response.data.token;
@@ -55,83 +66,104 @@ class RegisterScreen extends Component {
         await AsyncStorage.setItem('userToken', token);
 
         this.props.navigation.navigate('App');
+        this.setState({ registerRequest: false })
       } catch(error) {
-        console.log(error)
+        this.errorAlert.alertWithType('error', 'Erro ao registrar!', error.response.data.error)
+
+        this.setState({ registerRequest: false })
       }
     };
+
+    getAlertRef = (ref) => { this.errorAlert = ref }
   
     render() {
+      const { registerRequest } = this.state
       return (
-        <Wrapper>
-          <Formik
-            initialValues={{ name: '', email: '', password: '' }}
-            onSubmit={values => this.register(values)}
-            validationSchema={SignInSchemma}
-          >
-            {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
-              <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200, elevation: 4, }} />
+        <>
+          <ErrorAlert getAlertRef={this.getAlertRef} />
 
-                <Row>
-                  { errors.name && touched.name && (
-                    <Text color="#e74c3c">{errors.name}</Text>
-                  )}
-                </Row>
+          <Wrapper>
+            <Formik
+              initialValues={{ name: '', email: '', password: '' }}
+              onSubmit={values => this.register(values)}
+              validationSchema={SignInSchemma}
+            >
+              {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
+                <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                  <Image source={require('../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200, elevation: 4, }} />
 
-                <RowInput>
-                  <Icon name="user" size={24} color="#BDBDBD" />
-                  <Input
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                    placeholder="seu nome"
-                  />
-                </RowInput>
+                  <Row>
+                    { errors.name && touched.name && (
+                      <Text color="#e74c3c">{errors.name}</Text>
+                    )}
+                  </Row>
 
-                <Row>
-                  { errors.email && touched.email && (
-                    <Text color="#e74c3c">{errors.email}</Text>
-                  )}
-                </Row>
+                  <RowInput>
+                    <Icon name="user" size={24} color="#BDBDBD" />
+                    <Input
+                      onChangeText={handleChange('name')}
+                      onBlur={handleBlur('name')}
+                      value={values.name}
+                      placeholder="seu nome"
+                      returnKeyType="next"
+                      onEndEditing={() => this.email.focus()}
+                    />
+                  </RowInput>
 
-                <RowInput>
-                  <Icon name="mail" size={24} color="#BDBDBD" />
-                  <Input
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                    placeholder="sos@libras.com.br"
-                  />
-                </RowInput>
-              
-                <Row>
-                  { errors.password && touched.password && (
-                    <Text color="#e74c3c">{errors.password}</Text>
-                  )}
-                </Row>
+                  <Row>
+                    { errors.email && touched.email && (
+                      <Text color="#e74c3c">{errors.email}</Text>
+                    )}
+                  </Row>
 
-                <RowInput>
-                  <Icon name="key" size={24} color="#BDBDBD" />
-                  <Input
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    secureTextEntry
-                    returnKeyType="send"
-                    placeholder="********"
-                    onSubmitEditing={handleSubmit}
-                  />
-                </RowInput>
+                  <RowInput>
+                    <Icon name="mail" size={24} color="#BDBDBD" />
+                    <Input
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                      placeholder="sos@libras.com.br"
+                      autoCapitalize='none'
+                      returnKeyType="next"
+                      onEndEditing={() => this.password.focus()}
+                      ref={email => this.email = email}
+                    />
+                  </RowInput>
+                
+                  <Row>
+                    { errors.password && touched.password && (
+                      <Text color="#e74c3c">{errors.password}</Text>
+                    )}
+                  </Row>
 
-                <Row>
-                  <Button onPress={handleSubmit}>
-                    <Text color="#f2f2f7">Finalizar Cadastro</Text>
-                  </Button>
-                </Row>
-              </LinearGradient>
-            )}
-          </Formik>
-        </Wrapper>
+                  <RowInput>
+                    <Icon name="key" size={24} color="#BDBDBD" />
+                    <Input
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      value={values.password}
+                      secureTextEntry
+                      returnKeyType="send"
+                      placeholder="********"
+                      onSubmitEditing={handleSubmit}
+                      ref={password => this.password = password}
+                    />
+                  </RowInput>
+
+                  <Row>
+                    <Button onPress={handleSubmit}>
+                    { registerRequest ? (
+                        <DotIndicator count={3} color='white' size={8} />
+                      ) : (
+                        <Text color="#f2f2f7">Finalizar Cadastro</Text>
+                      )}
+                    </Button>
+                  </Row>
+                </LinearGradient>
+              )}
+            </Formik>
+          </Wrapper>
+        </>
       );
     }
 }
