@@ -18,7 +18,7 @@ export const Footer = styled.View`
   height: ${height * (10 / 100)};
 `
 
-export const Row = styled.View`
+export const ViewRow = styled.View`
   flex-direction: row;
   alignItems: center;
   justify-content: ${props => props.justify || 'center'};

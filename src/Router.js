@@ -1,22 +1,46 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
-import AuthLoadingScreen from './Auth/AuthLoadingScreen'
+import AuthLoadingScreen from './components/pages/Auth/AuthLoadingScreen'
 
-import SignInScreen from './Auth/SignInScreen'
-import ResetPasswordScreen from './Auth/ResetPasswordScreen'
-import RegisterScreen from './Auth/RegisterScreen'
+import SignInScreen from './components/pages/Auth/Login'
+import ResetPasswordScreen from './components/pages/Auth/Reset'
+import RegisterScreen from './components/pages/Auth/Register'
 
-import HomeScreen from './Home/HomeScreen'
-import Detalhes from './Home/Deaf/Historia/Detalhes'
-import DeafScreen from './Home/Deaf/DeafScreen'
+import HomeScreen from './components/pages/Home'
+import DeafScreen from './components/pages/Deaf/DeafScreen'
+import Reports from './components/pages/Home/Reports'
+import FimQueixa, { navigationOptions } from './components/pages/FimQueixa'
 
-import DoctorScreen from './Doctor/DoctorScreen'
+// Doctor part
+import DoctorScreen, { DoctorNavigationOptions } from './components/pages/Doctor/DoctorScreen'
+import Alimentation, { alimentationOptions } from './components/pages/Doctor/Alimentation'
 
 const AppStack = createStackNavigator({
   Home: HomeScreen,
-  Doctor: DoctorScreen,
+  Doctor: {
+    screen: DoctorScreen,
+    navigationOptions: DoctorNavigationOptions
+  },
   Deaf: DeafScreen,
-  Detalhes: Detalhes
+  Reports: {
+    screen: Reports,
+    navigationOptions: {
+      title: 'Registros Cadastrados',
+      headerTransparent: true,
+      headerTitleStyle: {
+        color: '#f2f2f7'
+      },
+      headerTintColor: '#f2f2f7',
+    }
+  },
+  FimQueixa: {
+    screen: FimQueixa,
+    navigationOptions: navigationOptions
+  },
+  Alimentation: {
+    screen: Alimentation,
+    navigationOptions: alimentationOptions,
+  }
 });
 
 const AuthStack = createStackNavigator({
@@ -32,6 +56,6 @@ export default createAppContainer(createSwitchNavigator(
     Auth: AuthStack,
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'AuthLoading',
   }
 ));
