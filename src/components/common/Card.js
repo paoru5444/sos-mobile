@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ReportCard = styled.View`
-  width: 45%;
+  width: 40%;
   height: 180px;
   background-color: #f2f2f7;
   box-shadow: 0 0 20px rgba(0, 0, 0, .05);
