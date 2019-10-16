@@ -5,27 +5,20 @@ const { width, height } = Dimensions.get('screen')
 
 export const Wrapper = styled.View`
   width: 100%;
-  height: 85%;
+  height: 100%;
   align-items: center;
   justify-content: ${ props => props.justify || 'flex-start'};
 `
 
-export const Footer = styled.View`
-  width: 100%;
-  height: 15%;
-  align-items: center;
-  justify-content: center;
-`
-
 export const Button = styled.TouchableHighlight`
-  width: ${ props => props.width|| '60%'};
+  width: ${ props => props.width|| '85%'};
   height: 60px;
   align-items: center;
   justify-content: center;
   background-color:${props => props.transparent || '#216583'};
   border-color: ${props => props.outlined || 'transparent'}
   border-width: ${props => props.border || 0}
-  border-radius: 26px;
+  border-radius: 30px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   elevation: 1;
 `
@@ -75,7 +68,6 @@ export const Row = styled.View`
   justify-content: ${ props => props.justify || 'center'};
   align-items: center;
   margin-bottom: 10px;
-  margin-top: 5px;
   padding: 0 20px 0 20px;
   flex-wrap: wrap;
 `

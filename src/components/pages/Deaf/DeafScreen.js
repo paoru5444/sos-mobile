@@ -1,16 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import {
-  View, BackHandler
+  BackHandler, StyleSheet, View,
 } from 'react-native'
 
 import {
-  TextInput, Row, Queixas, Text, Wrapper, CardQueixa, Chip,
+  Text,
 } from '../Home/HomeStyle'
 
 
 import QueixaComponent from './QueixaComponent'
-import HistoriaComponent from './Historia/HistoriaComponent'
-import PatologicaComponent from './PatologicaComponent'
+import Historia from './Historia'
 
 class DeafScreen extends Component {
 
@@ -150,9 +149,8 @@ class DeafScreen extends Component {
       const { step, queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao, queixaInput } = this.state;
       
       switch(step) {
-        case 0:
+        case 1:
           return (
-            // Queixa Principal
             <QueixaComponent
               next={this.next}
               queixas={queixas}
@@ -162,9 +160,9 @@ class DeafScreen extends Component {
               queixaInput={queixaInput}
             />
           )
-        case 1:
+        case 0:
           return (
-            <HistoriaComponent
+            <Historia
               next={this.next}
               getDuracao={this.getDuracao}
               duracaoSlider={duracaoSlider}
@@ -184,14 +182,22 @@ class DeafScreen extends Component {
       }
     }
 
-    render() {
-      
-      return (
-        <Fragment>
-          { this.renderItem() }
-        </Fragment>
-      );
-    }
+  render() {
+    return (
+      <View style={styles.wrapper}>
+        { this.renderItem() }
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+})
 
 export default DeafScreen;

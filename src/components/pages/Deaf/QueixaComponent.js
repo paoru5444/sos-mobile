@@ -1,32 +1,34 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { 
-  StyleSheet, ScrollView, View, Image, KeyboardAvoidingView
+  StyleSheet, ScrollView, View, Image, TouchableOpacity
 } from 'react-native'
 
 import {
-  Button, Footer, Text, Wrapper, Queixas, CardQueixa, Chip, Row
+  Button, Text, Wrapper, Queixas, CardQueixa,
 } from '../Home/HomeStyle'
 
 import {
-  RowInput, Input,
+  Input,
 } from '../Auth/AuthStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 
-// const colors = ['#447260', '#427676', '#84BFA8', '#3F9A82']
-const colors = ['#f7be16']
-
 const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
     <ScrollView style={styles.scroll}>
         <Wrapper>
-          <Row justify="flex-start">
+          {/* <Row justify="flex-start">
             <Text>Queixa Rápida </Text>
             <IconMCommunity name="truck-fast" size={24} color="#293462" />
-          </Row>
-          <Row>
+          </Row> */}
+          {/* <Row>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <CardQueixa onPress={() => getQueixaInput('Dor de Cabeça')}>
+                
+            </ScrollView>
+          </Row> */}
+
+          <View style={styles.row}>
+          <CardQueixa onPress={() => getQueixaInput('Dor de Cabeça')}>
                   <Image source={require('../../../assets/images/Queixa/dor-cabeca.jpg')} style={styles.image} />
                 </CardQueixa>
 
@@ -60,49 +62,43 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo,
                   <Image source={require('../../../assets/images/Queixa/nauseas.jpg')} style={styles.image} />
                 </CardQueixa>
                 <View style={{ width: 5 }} />
-            </ScrollView>
-          </Row>
+          </View>
 
-          <RowInput>
-            <Icon name="frown" size={24} color="#BDBDBD" />
-            <Input
-              placeholder="O que sentir para vir aqui?"
-              onChangeText={(text) => getQueixaInput(text)}
-              value={queixaInput}
-            />
-          </RowInput>
+          <View style={styles.row}>
+            <View style={styles.inputRow}>
+              <Icon name="frown" size={24} color="#BDBDBD" />
+              <Input
+                placeholder="O que sentir para vir aqui?"
+                onChangeText={(text) => getQueixaInput(text)}
+                value={queixaInput}
+              />
+            </View>
+            <TouchableOpacity onPress={() => adicionarQueixa()} style={styles.addButton}>
+              <Icon name="plus" size={26} color="#f2f2f7" />
+            </TouchableOpacity>
+          </View>
 
-            <Row>
+            {/* <Row>
               <Button width="88%" onPress={() => adicionarQueixa()} transparent="transparent" outlined="#216583" border="1px">
                 <Row>
                   <Text color="#216583">Adicionar Queixa</Text>
-                  <Icon name="plus" size={26} color="#00818a" />
+                  
                 </Row>
               </Button>
-            </Row>
+            </Row> */}
 
             <Queixas>
-              <ScrollView style={{ maxHeight: 300, }}>
-                  <Row>
-                  {queixas.map((queixa, index) => (
-                    // <Chip key={index} color={colors[Math.floor(Math.random() * 3)]}>
-                    <Chip key={index}>
-                      <>
-                      {/* <Icon name="chevron-right" size={22} /> */}
-                      <Text size="18px" color="#f2f2f2">{queixa}</Text>
-                      </>
-                    </Chip>
-                  ))}
-                  </Row>
-              </ScrollView>
+              <View style={styles.row}>
+                {queixas.map((queixa, index) => (
+                  <Text key={index} size="18px"> .{queixa} </Text>
+                ))}
+              </View>
             </Queixas>     
-        </Wrapper>
-        
-        <Footer>
+
             <Button onPress={() => next()}>
-                <Text color="#f2f2f7">Historia da Doença</Text>
+                <Text color="#f2f2f7">Proximo Passo</Text>
             </Button>
-        </Footer>
+        </Wrapper>
     </ScrollView>
 );
 
@@ -110,14 +106,41 @@ const styles = StyleSheet.create({
   scroll: {
     width: '100%',
     height: '100%',
-    paddingTop: 50,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
     borderRadius: 120
-  }
-})
+  },
+  addButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#216583',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  inputRow: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 20,
+    marginBottom: 20,
+    flexWrap: 'wrap',
+    backgroundColor: '#f2f2f7',
+    borderRadius: 30,
+  },
+  row: {
+    width: '95%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 20,
+    marginVertical: 10,
+    flexWrap: 'wrap',
+  },
+});
 
 export default QueixaComponent;

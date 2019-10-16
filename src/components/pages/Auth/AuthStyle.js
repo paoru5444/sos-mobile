@@ -36,7 +36,7 @@ export const RowInput = styled.View`
 `
 
 export const Input = styled.TextInput`
-  width: 80%;
+  width: 75%;
   height: 60px;
   align-items: center;
   justify-content: center;

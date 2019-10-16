@@ -1,15 +1,11 @@
 import React, { Fragment } from 'react'
 import {
-  View, StyleSheet,
-} from 'react-native'
-
-import { 
-    Picker, Switch, ScrollView
+  View, StyleSheet, Picker, Switch, ScrollView
 } from 'react-native'
 
 import {
   Button, Footer, Text, Wrapper
-} from '../../Home/HomeStyle'
+} from '../Home/HomeStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 import Slider from '@react-native-community/slider';
@@ -26,12 +22,12 @@ const Row = styled.View`
   margin-bottom: 15px
 `
 
-const QueixaComponent = ({
+export default function Historia ({
     next, getDuracao, duracaoSlider,
     getFrequencia, frequenciaPicker,
     getIntensidade, intensidadeSlider,
     getSituacao, situacao, makeAtendence
-}) => {
+}) {
 
   const { navigate } = useNavigation()
   
@@ -131,5 +127,3 @@ const styles= StyleSheet.create({
     paddingTop: 50,
   }
 })
-
-export default QueixaComponent;

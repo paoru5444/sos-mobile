@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ReportCard = styled.View`
+export const ReportCard = styled.TouchableOpacity`
   width: 40%;
   height: 180px;
   background-color: #f2f2f7;

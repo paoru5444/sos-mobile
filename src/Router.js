@@ -6,10 +6,11 @@ import SignInScreen from './components/pages/Auth/Login'
 import ResetPasswordScreen from './components/pages/Auth/Reset'
 import RegisterScreen from './components/pages/Auth/Register'
 
-import HomeScreen from './components/pages/Home/Reports'
+// import HomeScreen from './components/pages/Home/Reports'
 import DeafScreen from './components/pages/Deaf/DeafScreen'
 import Reports, { reportsNavigation } from './components/pages/Home/Reports'
 import FimQueixa, { navigationOptions } from './components/pages/FimQueixa'
+import ReportDetail from './components/pages/Home/ReportDetail'
 
 // Doctor part
 import DoctorScreen, { DoctorNavigationOptions } from './components/pages/Doctor/DoctorScreen'
@@ -19,6 +20,9 @@ const AppStack = createStackNavigator({
   Reports: {
     screen: Reports,
     navigationOptions: reportsNavigation
+  },
+  ReportDetail: {
+    screen: ReportDetail
   },
   Doctor: {
     screen: DoctorScreen,
