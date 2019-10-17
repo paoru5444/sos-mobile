@@ -1,129 +1,147 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import {
-  View, StyleSheet, Picker, Switch, ScrollView
+  StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native'
 
 import {
-  Button, Footer, Text, Wrapper
+  Button
 } from '../Home/HomeStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
 import Slider from '@react-native-community/slider';
 import { useNavigation } from 'react-navigation-hooks'
 
-import styled from 'styled-components/native'
-
-const Row = styled.View`
-  width: 80%;
-  align-self: center;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: row;
-  margin-bottom: 15px
-`
-
-export default function Historia ({
+const Historia =  ({
     next, getDuracao, duracaoSlider,
-    getFrequencia, frequenciaPicker,
+    getFrequencia, frequencia,
     getIntensidade, intensidadeSlider,
-    getSituacao, situacao, makeAtendence
-}) {
+    getLocalizacao, localizacao, makeAtendence,
+}) => {
 
   const { navigate } = useNavigation()
   
   return (
-    <Fragment>
-      <Wrapper>
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
-          <Row>
-            <Text>Duração: {duracaoSlider} {duracaoSlider === 1 ? 'dia' : 'dias'}</Text>
-          </Row>
+    <View style={styles.wrapper}>
+        <View style={styles.field}>
+          <Text style={styles.text}>Duração</Text>
 
-          <Row>
+          <View style={styles.squareField}>
+            <TouchableOpacity onPress={() => getDuracao('-')}>
+              <Text style={{...styles.text, fontSize: 30}}>-</Text>
+            </TouchableOpacity>
+            
+            <Text style={{...styles.text, fontSize: 18}}>{duracaoSlider} dias</Text>
+
+            <TouchableOpacity onPress={() => getDuracao('+')}>
+              <Text style={{...styles.text, fontSize: 20}}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Intensidade: { intensidadeSlider <= 1 && ' Baixa' ||
+                  intensidadeSlider > 1 && intensidadeSlider <= 2 && ' Media' ||
+                  intensidadeSlider > 2 && ' Alta' }</Text>
+          <View style={styles.squareField}>
             <Slider
-              style={{width: '100%', height: 40}}
+              style={{width: '100%',}}
               minimumValue={1}
-              maximumValue={30}
-              minimumTrackTintColor="#004D40"
+              maximumValue={3}
+              minimumTrackTintColor="#215583"
               maximumTrackTintColor="#000000"
-              onValueChange={(value) => getDuracao(value)}
+              onValueChange={(value) => getIntensidade(value)}
             />
-          </Row>
+          </View>
+        </View>
 
-          <Row>
-            <Text>
-                Intensidade: 
-                { intensidadeSlider === 0 && ' Baixa' ||
-                  intensidadeSlider !== 0 && intensidadeSlider !== 2 && ' Media' ||
-                  intensidadeSlider === 2 && ' Alta' }
-            </Text>
-          </Row>
+        <View style={styles.field}>
+          <Text style={styles.text}>Frequencia</Text>
+          <View style={styles.squareField}>
+            <TouchableOpacity onPress={() => getFrequencia('-')}>
+              <Text style={{...styles.text, fontSize: 30}}>-</Text>
+            </TouchableOpacity>
 
-          <Row>
-            <Slider
-                style={{width: '100%', height: 40}}
-                minimumValue={0}
-                maximumValue={2}
-                minimumTrackTintColor="#004D40"
-                maximumTrackTintColor="#000000"
-                onValueChange={(value) => getIntensidade(value)}
-            />
-          </Row>
+            <Text style={{...styles.text, fontSize: 18}}>{frequencia} em {frequencia} horas </Text>
 
-          <Row>
-            <Text>Frequência</Text>
-          </Row>
+            <TouchableOpacity onPress={() => getFrequencia('+')}>
+              <Text style={{...styles.text, fontSize: 20}}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-          <Row>
-            <Text>De: </Text>
-            <Picker
-                selectedValue={frequenciaPicker}
-                style={{height: 50, width: 100}}
-                onValueChange={itemValue => getFrequencia(itemValue)}
-            >
-                <Picker.Item label="1 hora" value={1} />
-                <Picker.Item label="2 horas" value={2} />
-                <Picker.Item label="3 horas" value={3} />
-                <Picker.Item label="4 horas" value={4} />
-            </Picker>
-                
-            <Text>Em: </Text>
-            <Picker style={{height: 50, width: 100}} selectedValue={frequenciaPicker}>
-                <Picker.Item label={frequenciaPicker + 'horas'} value={frequenciaPicker} />
-            </Picker>
-          </Row>                       
-              
-          <Row>
-            <Text>Melhora, Piora</Text>
-          </Row>
+        <View style={styles.field}>
+          <Text style={styles.text}>Localização</Text>
+          <View style={styles.squareField}>
+            <TouchableOpacity onPress={() => getLocalizacao('membros')}>
+              <Text>Membros</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => getLocalizacao('torco')}>
+              <Text>Torço</Text>
+            </TouchableOpacity>
 
-          <Row>
-            <Icon name="frown" size={30} color="#216583" style={{ marginRight: 10 }} />
+            <TouchableOpacity onPress={() => getLocalizacao('cabeca')}>
+              <Text>Cabeça</Text> 
+            </TouchableOpacity>
+          </View>
+        </View>
 
-            <Switch
-              onValueChange={(value) => getSituacao(value)}
-              value={situacao}
-            />
-
-            <Icon name="smile" size={30} color="#216583" style={{ marginLeft: 10 }} />
-          </Row>
-
-            </ScrollView>
-          </Wrapper>    
-
-          <Footer>
-              <Button onPress={() => navigate('FimQueixa')}>
-                  <Text color="#f2f2f7">Finalizar Queixa</Text>
-              </Button>
-          </Footer>
-    </Fragment>
+        <Button onPress={() => makeAtendence()}>
+            <Text style={{...styles.text, color: '#f2f2f7'}}>Finalizar Queixa</Text>
+        </Button>
+    </View>
   )
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   scroll: {
     width: '100%',
     height: '100%',
     paddingTop: 50,
-  }
+  },
+  form: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingLeft: 20,
+  },
+  field: {
+    width: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 20,
+    paddingVertical: 10,
+  },
+  input: {
+    width: '100%',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#2c2c2c',
+  },
+  errorMessage: {
+    color: '#f0134d',
+    alignSelf: 'flex-start',
+  },
+  text: {
+    color: '#2c2c2c',
+    fontSize: 16,
+  },
+  squareField: {
+    width: '60%',
+    height: '10%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+  },
 })
+
+export default Historia

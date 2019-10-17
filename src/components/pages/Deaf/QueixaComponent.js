@@ -14,9 +14,9 @@ import {
 import Icon from 'react-native-vector-icons/Feather'
 import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
+const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
     <ScrollView style={styles.scroll}>
-        <Wrapper>
+        <Wrapper style={styles.wrapper}>
           {/* <Row justify="flex-start">
             <Text>Queixa Rápida </Text>
             <IconMCommunity name="truck-fast" size={24} color="#293462" />
@@ -66,7 +66,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo,
 
           <View style={styles.row}>
             <View style={styles.inputRow}>
-              <Icon name="frown" size={24} color="#BDBDBD" />
+              <Icon name="frown" size={24} color="#f2f2f2" />
               <Input
                 placeholder="O que sentir para vir aqui?"
                 onChangeText={(text) => getQueixaInput(text)}
@@ -90,7 +90,7 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo,
             <Queixas>
               <View style={styles.row}>
                 {queixas.map((queixa, index) => (
-                  <Text key={index} size="18px"> .{queixa} </Text>
+                  <Text style={styles.text} key={index}> {queixa} </Text>
                 ))}
               </View>
             </Queixas>     
@@ -103,6 +103,13 @@ const QueixaComponent = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo,
 );
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+    height: '100%',
+    paddingTop: '5%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   scroll: {
     width: '100%',
     height: '100%',
@@ -128,9 +135,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 20,
     marginBottom: 20,
-    flexWrap: 'wrap',
     backgroundColor: '#f2f2f7',
     borderRadius: 30,
+    borderBottomColor: '#f2f2f7',
   },
   row: {
     width: '95%',
@@ -143,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QueixaComponent;
+export default Queixa;

@@ -4,7 +4,8 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from 'react-navigation-hooks'
 
 import { Text } from '../../common/Text'
-import { Button } from '../../common/Button'
+
+import api from '../../../server/api'
 
 export function navigationOptions({ navigation }) {
   return {
@@ -19,8 +20,12 @@ export function navigationOptions({ navigation }) {
   };
 }
 
-export default function FimQueixa() {
+export default function FimQueixa({ anamnese }) {
   const { navigate } = useNavigation()
+
+  function submitAnamnese() {
+
+  }
 
   return (
     <View style={styles.wrapper}>

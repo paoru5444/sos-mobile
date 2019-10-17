@@ -8,7 +8,7 @@ const api = axios.create({
   }
 });
 
-const baseURL = 'https://sos-libras.herokuapp.com'
+export const baseURL = 'https://sos-libras.herokuapp.com'
 
 AsyncStorage.setItem('apiUrl', baseURL)
 

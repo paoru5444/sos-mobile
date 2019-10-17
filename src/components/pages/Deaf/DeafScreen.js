@@ -7,14 +7,15 @@ import {
   Text,
 } from '../Home/HomeStyle'
 
+import LinearGradient from 'react-native-linear-gradient'
 
 import QueixaComponent from './QueixaComponent'
 import Historia from './Historia'
+import api from '../../../server/api'
 
 class DeafScreen extends Component {
 
   static navigationOptions = ({navigation}) => {
-    
     return {
       title: 'Anamnese',
       headerTintColor: '#f2f2f7',
@@ -26,168 +27,177 @@ class DeafScreen extends Component {
       },
     }
   }
-    choseTitle() {
-      const { step } = this.state;
-      
-      switch(step) {
-        case 0:
-          return 'Queixa Principal'
-        case 1:
-          return 'Historia da Doença'
-        case 2:
-          return 'Historia Patologica Pregressa'
-      }
-    }
 
-    componentDidMount() {
-      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
-      this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    }
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
 
   
-    handleBackPress = () => {
-      const { step } = this.state;
-      if (step >= 1) {
-        this.prev() 
-        return true
-      } 
+  handleBackPress = () => {
+    const { step } = this.state;
+    if (step >= 1) {
+      this.prev() 
+      return true
+    } 
 
-      return false
+    return false
+  }
+
+  constructor(props)  {
+    super(props)
+    
+    this.state = {
+      step: 0,
+      queixas: [],
+      queixaInput: '',
+      duracao: 1,
+      frequencia: 1,
+      intensidadeSlider: 0,
+      localizacao: [],
     }
 
-    constructor(props)  {
-      super(props)
-      
-      this.state = {
-        step: 0,
-        queixas: [],
-        queixaInput: '',
-        duracaoSlider: 0,
-        frequenciaPicker: '',
-        intensidadeSlider: 0,
-        situacao: false,
-      }
+    this.next = this.next.bind(this)
+    this.adicionarQueixa = this.adicionarQueixa.bind(this)
+    this.getQueixaInput = this.getQueixaInput.bind(this)
 
-      this.next = this.next.bind(this)
-      this.adicionarQueixa = this.adicionarQueixa.bind(this)
-      this.getQueixaInput = this.getQueixaInput.bind(this)
+    this.getDuracao = this.getDuracao.bind(this)
+    this.getFrequencia = this.getFrequencia.bind(this)
+    this.getIntensidade = this.getIntensidade.bind(this)
+    this.getLocalizacao = this.getLocalizacao.bind(this)
 
-      this.getDuracao = this.getDuracao.bind(this)
-      this.getFrequencia = this.getFrequencia.bind(this)
-      this.getIntensidade = this.getIntensidade.bind(this)
-      this.getSituacao = this.getSituacao.bind(this)
+    this.makeAtendence = this.makeAtendence.bind(this)
 
-      this.makeAtendence = this.makeAtendence.bind(this)
+    this.goTo = this.goTo.bind(this)
+  }
 
-      this.goTo = this.goTo.bind(this)
-    }
+  next = () => {
+    const { step } = this.state;
+    this.setState({
+      step: step + 1
+    })
+  }
 
-    next = () => {
-      const { step } = this.state;
+  prev = () => {
+    const { step } = this.state;
+    if (step >= 1) {
       this.setState({
-        step: step + 1
-      })
-      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
-    }
-
-    prev = () => {
-      const { step } = this.state;
-      if (step >= 1) {
-        this.setState({
-          step: step -1
-        })
-      }
-      this.props.navigation.setParams({ choseTitle: this.choseTitle() })
-    }
-
-    getQueixaInput = (queixa) => {
-      this.setState({
-        queixaInput: queixa,
+        step: step -1
       })
     }
+  }
 
-    getDuracao = (duracao) => {
+  getQueixaInput = (queixa) => {
+    this.setState({
+      queixaInput: queixa,
+    })
+  }
+
+  getDuracao = (sign) => {
+    const { duracao } = this.state
+    if (duracao >= 1) {
       this.setState({
-        duracaoSlider: parseInt(duracao),
+        duracao: sign === '+' ? duracao + 1 : duracao - 1 ,
       })
     }
+  }
 
-    getFrequencia = (frequencia) => {
+  getFrequencia = (sign) => {
+    const { frequencia } = this.state
+    if (frequencia >= 1) {
       this.setState({
-        frequenciaPicker: frequencia,
+        frequencia: sign === '+' ? frequencia + 1 : frequencia - 1 ,
       })
     }
+  }
 
-    getIntensidade = (intensidade) => {
-      this.setState({
-        intensidadeSlider: intensidade,
-      })
-    }
+  getIntensidade = (intensidade) => {
+    let aux = ''
 
-    getSituacao = (situacao) => {
-      this.setState({ situacao })
-    }
-
-    adicionarQueixa = () => {
-      this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})
+    switch(intensidade) {
+      case 1: aux = 'Baixa'
+      case 2: aux = 'Media'
+      case 3: aux = 'Alta'
+      default: aux = 'Mediano'
     }
     
-    goTo(route = "") {
-      this.props.navigation.navigate(route)
-    }
+    this.setState({
+      intensidadeSlider: aux,
+    })
+  }
 
-    makeAtendence = async () => {
-      // queixa: String,
-      // duracao: String,
-      // intensidade: String,
-      // frequencia: String,
-      // melhora_piora: String,
-      const { queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao } = this.state
-    }
+  getLocalizacao = (loc) => {
+    const { localizacao } = this.state;
+    const hasSameData = localizacao.some(o => o === loc)
+    if (hasSameData) return
+    this.setState({localizacao: [...this.state.localizacao, loc]})
+  }
+
+  getCRM = (crm) => {
+    console.log('crm')
+    this.setState({crm})
+  }
+
+  adicionarQueixa = () => {
+    this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})
+  }
   
-    renderItem = () => {
-      const { step, queixas, duracaoSlider, frequenciaPicker, intensidadeSlider, situacao, queixaInput } = this.state;
+  goTo(route = "", params = {}) {
+    this.props.navigation.navigate(route, params)
+  }
+
+  makeAtendence = async () => {
+    try {
+      const { queixas, duracao, frequencia, intensidadeSlider, localizacao, crm } = this.state
+      const intensidade = parseInt(intensidadeSlider)
       
-      switch(step) {
-        case 1:
-          return (
-            <QueixaComponent
-              next={this.next}
-              queixas={queixas}
-              getQueixaInput={this.getQueixaInput}
-              adicionarQueixa={this.adicionarQueixa}
-              goTo={this.goTo}
-              queixaInput={queixaInput}
-            />
-          )
-        case 0:
-          return (
-            <Historia
-              next={this.next}
-              getDuracao={this.getDuracao}
-              duracaoSlider={duracaoSlider}
-              getFrequencia={this.getFrequencia}
-              frequenciaPicker={frequenciaPicker}
-              getIntensidade={this.getIntensidade}
-              intensidadeSlider={intensidadeSlider}
-              getSituacao={this.getSituacao}
-              situacao={situacao}
-              makeAtendence={this.makeAtendence}
-            />
-          )
-        default: 
-            return (
-              <Text>Tela não encontrada.</Text>
-            )
-      }
+      // await api.post('/anamnese', {
+      //   queixas, duracao, frequencia, intensidade, localizacao, crmMedico: crm
+      // })
+    } catch(error) {
+      console.log(error)
     }
+    this.goTo('FimQueixa', { queixas, duracao, frequencia, intensidadeSlider, localizacao, crm })
+  }
+
+  renderItem = () => {
+    const { step, queixas, duracao, frequencia, intensidadeSlider, localizacao, queixaInput, crm } = this.state;
+    
+    switch(step) {
+      case 0:
+        return (
+          <QueixaComponent
+            next={this.next}
+            queixas={queixas}
+            getQueixaInput={this.getQueixaInput}
+            adicionarQueixa={this.adicionarQueixa}
+            goTo={this.goTo}
+            queixaInput={queixaInput}
+          />
+        )
+      case 1:
+        return (
+          <Historia
+            next={this.next}
+            getDuracao={this.getDuracao}
+            duracao={duracao}
+            getFrequencia={this.getFrequencia}
+            frequencia={frequencia}
+            getIntensidade={this.getIntensidade}
+            intensidadeSlider={intensidadeSlider}
+            getLocalizacao={this.getLocalizacao}
+            localizacao={localizacao}
+            makeAtendence={this.makeAtendence}
+          />
+        )
+      default: 
+          return (
+            <Text>Tela não encontrada.</Text>
+          )
+    }
+  }
 
   render() {
-    return (
-      <View style={styles.wrapper}>
-        { this.renderItem() }
-      </View>
-    );
+    return this.renderItem()
   }
 }
 
