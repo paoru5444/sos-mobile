@@ -19,9 +19,11 @@ import Feather from 'react-native-vector-icons/Feather'
 export function reportsNavigation({ navigate }) {
   return {
     title: 'Registros Cadastrados',
-    headerTransparent: true,
     headerTitleStyle: {
       color: '#f2f2f7'
+    },
+    headerStyle: {
+      backgroundColor: '#216583',
     },
     headerTintColor: '#f2f2f7',
   }
@@ -48,7 +50,7 @@ function Reports() {
 
   return (
     <LinearGradient colors={['#216583', '#217e83']} style={styles.wrapper}>
-      { reports ? (
+      { reports.length > 0 ? (
         <ScrollView>
           <View style={styles.cardView}>
             { reports.map((report, index) => (
@@ -64,14 +66,14 @@ function Reports() {
           </View>
         </ScrollView>
       ) : (
-        <TouchableOpacity onPress={() => navigate('Deaf')} style={styles.view}>
+        <View style={styles.view}>
           <Image source={require('../../../assets/images/no-complains.png')} style={styles.image} />
-          <Button>
+          <Button onPress={() => navigate('Deaf')} style={styles.button}>
             <Text style={styles.buttonText}>Cadastrar Queixa</Text>
           </Button>
-        </TouchableOpacity>
+        </View>
       )}
-      <Menu openMenu={openMenu} menuHandle={menuHandle} />
+      {/* <Menu openMenu={openMenu} menuHandle={menuHandle} /> */}
     </LinearGradient>
   );
 }
@@ -115,6 +117,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#f2f2f7'
   },
+  button: {
+    width: 300,
+    bottom: 50,
+  }
 })
 
 export default withNavigation(Reports)

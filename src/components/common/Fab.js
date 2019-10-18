@@ -11,5 +11,5 @@ export const Fab = styled.TouchableOpacity`
   bottom: 30px;
   background-color: #215583;
   box-shadow: 3px 9px 21px rgba(125,141,173,0.45);
-  elevation: 4;
+  elevation: 5;
 `

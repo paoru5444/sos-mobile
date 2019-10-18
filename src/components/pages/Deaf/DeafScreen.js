@@ -148,7 +148,8 @@ class DeafScreen extends Component {
   makeAtendence = async () => {
     try {
       const { queixas, duracao, frequencia, intensidadeSlider, localizacao, crm } = this.state
-      const intensidade = parseInt(intensidadeSlider)
+      this.goTo('FimQueixa', { anamnese: {queixas, duracao, frequencia, intensidadeSlider, localizacao, crm} })
+      // const intensidade = parseInt(intensidadeSlider)
       
       // await api.post('/anamnese', {
       //   queixas, duracao, frequencia, intensidade, localizacao, crmMedico: crm
@@ -156,7 +157,6 @@ class DeafScreen extends Component {
     } catch(error) {
       console.log(error)
     }
-    this.goTo('FimQueixa', { queixas, duracao, frequencia, intensidadeSlider, localizacao, crm })
   }
 
   renderItem = () => {

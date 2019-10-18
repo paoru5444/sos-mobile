@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from 'react-navigation-hooks'
@@ -20,11 +20,22 @@ export function navigationOptions({ navigation }) {
   };
 }
 
-export default function FimQueixa({ anamnese }) {
+export default function FimQueixa(props) {
   const { navigate } = useNavigation()
 
-  function submitAnamnese() {
+  useEffect(() => {
+    
+  }, [])
 
+  async function submitAnamnese(route) {
+    try {
+      const anamnese = props.navigation.getParam('anamnese')
+      await api.post('/anamnese', anamnese)
+      navigate(route)
+      console.log('Anamnese', anamnese)
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -33,12 +44,12 @@ export default function FimQueixa({ anamnese }) {
         <Text color="#2c2c2c" size="28px">Escolha entre as{'\n'}duas opções</Text>
       </View>
 
-      <TouchableOpacity style={styles.row}>
+      <TouchableOpacity style={styles.row} onPress={() => submitAnamnese('Reports')}>
         <Image source={require('../../../assets/images/man.png')} style={styles.image} />
         <Text color="#2c2c2c">Sou Surdo,{'\n'}Quero salvar minha queixa.</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.row} onPress={() => navigate('Doctor')}>
+      <TouchableOpacity style={styles.row} onPress={() => submitAnamnese('Doctor')}>
         <Image source={require('../../../assets/images/doctor.png')} style={styles.image} />
         <Text color="#2c2c2c">Sou Médico,{'\n'}quero diagnosticar.</Text>
       </TouchableOpacity>
