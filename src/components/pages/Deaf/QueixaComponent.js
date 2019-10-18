@@ -33,7 +33,7 @@ const images = [
 const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
     <ScrollView style={styles.scroll}>
         <View style={styles.wrapper}>
-          <View style={{...styles.row, justifyContent: 'center'}}>
+          <View style={{...styles.row, justifyContent: 'flex-start', paddingLeft: 20}}>
             { images.map((img, index) => {
               return (
                 <CardQueixa onPress={() => getQueixaInput(img.name)} key={index}>
@@ -64,7 +64,7 @@ const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaIn
           </View>
 
           <Button onPress={() => next()}>
-              <Text color="#f2f2f7">Proximo Passo</Text>
+              <Text style={{color: '#f2f2f7', fontSize: 16 }}>Proximo Passo</Text>
           </Button>
         </View>
     </ScrollView>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     paddingTop: '5%',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   scroll: {
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   row: {
     width: '95%',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
     flexWrap: 'wrap',

@@ -16,7 +16,12 @@ import Menu from '../../common/Menu'
 
 import Feather from 'react-native-vector-icons/Feather'
 
-export function reportsNavigation({ navigate }) {
+export function reportsNavigation({ navigation }) {  
+  const menuHandle = navigation.getParam('menu')
+  const closeHandle = navigation.getParam('closeMenu')
+  const openMenu = navigation.getParam('openMenu')
+
+  console.log(openMenu)
   return {
     title: 'Registros Cadastrados',
     headerTitleStyle: {
@@ -26,12 +31,17 @@ export function reportsNavigation({ navigate }) {
       backgroundColor: '#216583',
     },
     headerTintColor: '#f2f2f7',
+    headerLeft: <TouchableOpacity onPress={() => !openMenu ? menuHandle() : closeHandle()}>
+                  <Feather name={!openMenu ? "menu" : "x"} size={30} color="#fff" />
+                </TouchableOpacity>
   }
 }
 
-function Reports() {
+function Reports(props) {
   const [reports, setReport] = useState([])
-  const [openMenu, setOpenMenu] = useState([])
+  const [openMenu, setOpenMenu] = useState(false)
+
+  const { navigate, setParams } = useNavigation()
 
   useEffect(() => {
     (async () => {
@@ -39,14 +49,18 @@ function Reports() {
       setReport(anamnese.data)
     })()
 
-  }, [])
+    setParams({ menu: menuHandle, closeMenu: closeHandle, openMenu })
 
-  const { navigate } = useNavigation()
+  }, [openMenu])
 
   function menuHandle() {
-    console.log('here')
-    setOpenMenu(!openMenu)
+    setOpenMenu(true)
   }
+
+  function closeHandle() {
+    setOpenMenu(false)
+  }
+
 
   return (
     <LinearGradient colors={['#216583', '#217e83']} style={styles.wrapper}>
@@ -75,7 +89,10 @@ function Reports() {
           <Feather name="plus" size={26} color="#f2f2f7" />
         </Fab>  
       }
-      {/* <Menu openMenu={openMenu} menuHandle={menuHandle} /> */}
+
+      { Boolean(openMenu) === true && (
+        <Menu openMenu={openMenu} menuHandle={menuHandle} />
+      )}
     </LinearGradient>
   );
 }
@@ -124,4 +141,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default withNavigation(Reports)
+export default Reports

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import SideMenu from 'react-native-side-menu';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,18 +16,29 @@ function ChildrenMenu(props) {
 
     return (
       <View style={styles.wrapper}>
-        <LinearGradient colors={['#880E4F', '#C2185B', '#E91E63']} style={styles.backgroundGradient}>
+        <LinearGradient colors={['#216583', '#216583']} style={styles.backgroundGradient}>
           <View style={styles.closeRow}>
             <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
-
-            <TouchableOpacity onPress={() => this.props.menuHandle()}>
-              <Feather name="x" size={35} color="#fff" style={{marginRight: 10}} />
-            </TouchableOpacity>
           </View>
         
-          <TouchableOpacity onPress={() => this.logout()} style={styles.row}>
-            <Feather name="power" size={30} color="#fff" style={{marginRight: 10}} />
-            <Text size={28}>Sair</Text>
+          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+            <Feather name="user" size={26} color="#fff" style={{marginRight: 10}} />
+            <Text style={styles.text}>Perfil</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+            <Feather name="book-open" size={26} color="#fff" style={{marginRight: 10}} />
+            <Text style={styles.text}>Historico</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+            <Feather name="info" size={26} color="#fff" style={{marginRight: 10}} />
+            <Text style={styles.text}>Sobre</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+            <Feather name="power" size={26} color="#fff" style={{marginRight: 10}} />
+            <Text style={styles.text}>Sair</Text>
           </TouchableOpacity>
         </LinearGradient>
       </View>
@@ -38,7 +49,7 @@ export default ({ openMenu, menuHandle, navigation, userVictim }) => (
   <SideMenu
     menu={openMenu === true ? (<ChildrenMenu menuHandle={menuHandle} navigation={navigation} userVictim={userVictim} />) : null}
     bounceBackOnOverdraw
-    menuPosition="right"
+    menuPosition="left"
     disableGestures
     animationFunction={(prop, value) => Animated.timing(prop, {
       duration: 5000,
@@ -54,6 +65,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
     zIndex: 999,
   },
 
@@ -71,10 +83,9 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     position: 'absolute',
-    top: 50,
-    paddingVertical: 20,
+    top: 80,
   },
   logo: {
     width: 150,
@@ -88,5 +99,10 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  text: {
+    fontSize: 18,
+    marginVertical: 10,
+    color: '#f2f2f7'
+  },
 })
