@@ -21,6 +21,7 @@ export const Button = styled.TouchableHighlight`
   border-radius: 30px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   elevation: 1;
+  margin-bottom: 20px
 `
 
 export const Card = styled.TouchableHighlight`
@@ -94,6 +95,7 @@ export const CardQueixa = styled.TouchableOpacity`
   border-radius: 60px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   elevation: 1;
+  margin-bottom: 5px
 `
 
 export const Chip = styled.TouchableHighlight`

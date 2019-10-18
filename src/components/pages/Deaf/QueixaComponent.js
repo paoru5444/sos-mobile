@@ -1,10 +1,10 @@
 import React from 'react'
 import { 
-  StyleSheet, ScrollView, View, Image, TouchableOpacity
+  StyleSheet, ScrollView, View, Image, Text, TouchableOpacity
 } from 'react-native'
 
 import {
-  Button, Text, Wrapper, Queixas, CardQueixa,
+  Button, CardQueixa,
 } from '../Home/HomeStyle'
 
 import {
@@ -14,54 +14,33 @@ import {
 import Icon from 'react-native-vector-icons/Feather'
 import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 
+const images = [
+  {name: "Dor de Cabeça", img: require("../../../assets/images/Queixa/dor-cabeca.jpg") },
+  {name: "Fraquesa", img: require("../../../assets/images/Queixa/fraquesa.jpg") },
+  {name: "Tosse", img: require("../../../assets/images/Queixa/tosse.jpg") },
+  {name: "Tontura", img: require("../../../assets/images/Queixa/tontura.jpg") },
+  {name: "Alopecia", img: require("../../../assets/images/Queixa/alopecia.jpg") },
+  {name: "Dor no Joelho", img: require("../../../assets/images/Queixa/dor-joelho.jpg") },
+  {name: "Nauseas", img: require("../../../assets/images/Queixa/nauseas.jpg") },
+  {name: "Lombalgia", img: require("../../../assets/images/Queixa/lombalgia.png") },
+  {name: "Dor Abdominal Difusa", img: require("../../../assets/images/Queixa/dor-abdominal-difusa.jpg") },
+  {name: "Febre", img: require("../../../assets/images/Queixa/febre.jpg") },
+  {name: "Manchas na Pele", img: require("../../../assets/images/Queixa/mancha-pele.jpg") },
+  {name: "Sindrome Gripal", img: require("../../../assets/images/Queixa/gripe.jpg") },
+  {name: "Alergia", img: require("../../../assets/images/Queixa/alergia.jpeg") },
+  {name: "Disuria", img: require("../../../assets/images/Queixa/disuria.jpeg") },
+]
 const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
     <ScrollView style={styles.scroll}>
-        <Wrapper style={styles.wrapper}>
-          {/* <Row justify="flex-start">
-            <Text>Queixa Rápida </Text>
-            <IconMCommunity name="truck-fast" size={24} color="#293462" />
-          </Row> */}
-          {/* <Row>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                
-            </ScrollView>
-          </Row> */}
-
-          <View style={styles.row}>
-          <CardQueixa onPress={() => getQueixaInput('Dor de Cabeça')}>
-                  <Image source={require('../../../assets/images/Queixa/dor-cabeca.jpg')} style={styles.image} />
+        <View style={styles.wrapper}>
+          <View style={{...styles.row, justifyContent: 'center'}}>
+            { images.map((img, index) => {
+              return (
+                <CardQueixa onPress={() => getQueixaInput(img.name)} key={index}>
+                  <Image source={img.img} style={styles.image} />
                 </CardQueixa>
-
-                <View style={{ width: 5 }} />
-                <CardQueixa onPress={() => getQueixaInput('Fraquesa')} >
-                  <Image source={require('../../../assets/images/Queixa/fraquesa.jpg')} style={styles.image} />
-                </CardQueixa>
-
-                <View style={{ width: 5 }} />
-                <CardQueixa onPress={() => getQueixaInput('Tosse')}>
-                  <Image source={require('../../../assets/images/Queixa/tosse.jpg')} style={styles.image} />
-                </CardQueixa>
-
-                <View style={{ width: 5 }} />
-                <CardQueixa onPress={() => getQueixaInput('Tontura')}>
-                  <Image source={require('../../../assets/images/Queixa/tontura.jpg')} style={styles.image} />
-                </CardQueixa>
-                <View style={{ width: 5 }} />
-
-                <CardQueixa onPress={() => getQueixaInput('Alopecia')}>
-                  <Image source={require('../../../assets/images/Queixa/alopecia.jpg')} style={styles.image} />
-                </CardQueixa>
-                <View style={{ width: 5 }} />
-
-                <CardQueixa onPress={() => getQueixaInput('Dor no Joelho')}>
-                  <Image source={require('../../../assets/images/Queixa/dor-joelho.jpg')} style={styles.image} />
-                </CardQueixa>
-                <View style={{ width: 5 }} />
-
-                <CardQueixa onPress={() => getQueixaInput('Nauseas')}>
-                  <Image source={require('../../../assets/images/Queixa/nauseas.jpg')} style={styles.image} />
-                </CardQueixa>
-                <View style={{ width: 5 }} />
+              )
+            })}
           </View>
 
           <View style={styles.row}>
@@ -78,27 +57,16 @@ const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaIn
             </TouchableOpacity>
           </View>
 
-            {/* <Row>
-              <Button width="88%" onPress={() => adicionarQueixa()} transparent="transparent" outlined="#216583" border="1px">
-                <Row>
-                  <Text color="#216583">Adicionar Queixa</Text>
-                  
-                </Row>
-              </Button>
-            </Row> */}
+          <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
+            {queixas.map((queixa, index) => (
+              <Text style={styles.text} key={index}> {queixa} </Text>
+            ))}
+          </View>
 
-            <Queixas>
-              <View style={styles.row}>
-                {queixas.map((queixa, index) => (
-                  <Text style={styles.text} key={index}> {queixa} </Text>
-                ))}
-              </View>
-            </Queixas>     
-
-            <Button onPress={() => next()}>
-                <Text color="#f2f2f7">Proximo Passo</Text>
-            </Button>
-        </Wrapper>
+          <Button onPress={() => next()}>
+              <Text color="#f2f2f7">Proximo Passo</Text>
+          </Button>
+        </View>
     </ScrollView>
 );
 
@@ -144,10 +112,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: 20,
     marginVertical: 10,
     flexWrap: 'wrap',
   },
+  text: {
+    alignSelf: "flex-start",
+    color: '#2c2c2c',
+    fontSize: 16
+  }
 });
 
 export default Queixa;

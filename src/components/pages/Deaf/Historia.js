@@ -1,13 +1,13 @@
 import React from 'react'
 import {
-  StyleSheet, Text, TextInput, TouchableOpacity, View
+  Image, StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native'
 
 import {
   Button
 } from '../Home/HomeStyle'
 
-import Icon from 'react-native-vector-icons/Feather'
+import Feather from 'react-native-vector-icons/Feather'
 import Slider from '@react-native-community/slider';
 import { useNavigation } from 'react-navigation-hooks'
 
@@ -72,16 +72,19 @@ const Historia =  ({
         <View style={styles.field}>
           <Text style={styles.text}>Localização</Text>
           <View style={styles.squareField}>
-            <TouchableOpacity onPress={() => getLocalizacao('membros')}>
-              <Text>Membros</Text>
+            <TouchableOpacity onPress={() => getLocalizacao('membros')} style={{ alignItems: 'center'}}>
+              <Image source={require('../../../assets/images/historia/broken-arm.png')} style={styles.localizacaoImage} />
+              <Text>Membros {localizacao[0] && <Feather name="check" size={20} color="green" />}</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity onPress={() => getLocalizacao('torco')}>
-              <Text>Torço</Text>
+            <TouchableOpacity onPress={() => getLocalizacao('torco')} style={{ alignItems: 'center'}}>
+              <Image source={require('../../../assets/images/historia/abs.png')} style={styles.localizacaoImage} />
+              <Text>Torço {localizacao[1] && <Feather name="check" size={20} color="green" />}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => getLocalizacao('cabeca')}>
-              <Text>Cabeça</Text> 
+            <TouchableOpacity onPress={() => getLocalizacao('cabeca')} style={{ alignItems: 'center'}}>
+              <Image source={require('../../../assets/images/historia/head.png')} style={styles.localizacaoImage} />
+              <Text>Cabeça {localizacao[2] && <Feather name="check" size={20} color="green" />}</Text> 
             </TouchableOpacity>
           </View>
         </View>
@@ -142,6 +145,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
   },
+  localizacaoImage: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain'
+  }
 })
 
 export default Historia
