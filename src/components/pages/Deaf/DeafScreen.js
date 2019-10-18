@@ -52,7 +52,7 @@ class DeafScreen extends Component {
       queixaInput: '',
       duracao: 1,
       frequencia: 1,
-      intensidadeSlider: 0,
+      intensidade: 0,
       localizacao: [],
     }
 
@@ -111,17 +111,9 @@ class DeafScreen extends Component {
   }
 
   getIntensidade = (intensidade) => {
-    let aux = ''
-
-    switch(intensidade) {
-      case 1: aux = 'Baixa'
-      case 2: aux = 'Media'
-      case 3: aux = 'Alta'
-      default: aux = 'Mediano'
-    }
-    
+    console.log(intensidade)
     this.setState({
-      intensidadeSlider: aux,
+      intensidade
     })
   }
 
@@ -146,21 +138,29 @@ class DeafScreen extends Component {
   }
 
   makeAtendence = async () => {
-    try {
-      const { queixas, duracao, frequencia, intensidadeSlider, localizacao, crm } = this.state
-      this.goTo('FimQueixa', { anamnese: {queixas, duracao, frequencia, intensidadeSlider, localizacao, crm} })
-      // const intensidade = parseInt(intensidadeSlider)
-      
-      // await api.post('/anamnese', {
-      //   queixas, duracao, frequencia, intensidade, localizacao, crmMedico: crm
-      // })
-    } catch(error) {
-      console.log(error)
+    const {queixas, duracao, frequencia, intensidade, localizacao } = this.state
+  
+    this.goTo('FimQueixa', {
+      anamnese: {
+        queixas,
+        duracao,
+        frequencia,
+        intensidade: this.intensidadeHandler(intensidade),
+        localizacao}
+      })
+  }
+
+  intensidadeHandler(intensidade) {
+    switch(intensidade) {
+      case 1: return 'Baixa'
+      case 2: return 'Media'
+      case 3: return 'Alta'
+      default: return 'Mediano'
     }
   }
 
   renderItem = () => {
-    const { step, queixas, duracao, frequencia, intensidadeSlider, localizacao, queixaInput, crm } = this.state;
+    const { step, queixas, duracao, frequencia, intensidade, localizacao, queixaInput } = this.state;
     
     switch(step) {
       case 0:
@@ -177,13 +177,12 @@ class DeafScreen extends Component {
       case 1:
         return (
           <Historia
-            next={this.next}
             getDuracao={this.getDuracao}
             duracao={duracao}
             getFrequencia={this.getFrequencia}
             frequencia={frequencia}
             getIntensidade={this.getIntensidade}
-            intensidadeSlider={intensidadeSlider}
+            intensidade={intensidade}
             getLocalizacao={this.getLocalizacao}
             localizacao={localizacao}
             makeAtendence={this.makeAtendence}

@@ -21,20 +21,20 @@ export function navigationOptions({ navigation }) {
 }
 
 export default function FimQueixa(props) {
-  const { navigate } = useNavigation()
+  const { navigate, push } = useNavigation()
+
+  const [anamnese, setAnamnese] = useState({})
 
   useEffect(() => {
-    
+    setAnamnese(props.navigation.getParam('anamnese'))
   }, [])
 
   async function submitAnamnese(route) {
     try {
-      const anamnese = props.navigation.getParam('anamnese')
-      await api.post('/anamnese', anamnese)
-      navigate(route)
-      console.log('Anamnese', anamnese)
+      const response = await api.post('/anamnese', anamnese)
+      push(route)
     } catch(error) {
-      console.log(error)
+      console.log(error.response)
     }
   }
 

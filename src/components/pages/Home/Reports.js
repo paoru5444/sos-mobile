@@ -50,19 +50,15 @@ function Reports() {
 
   return (
     <LinearGradient colors={['#216583', '#217e83']} style={styles.wrapper}>
-      { reports.length > 0 ? (
-        <ScrollView>
+      { reports.length >= 0 ? (
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           <View style={styles.cardView}>
             { reports.map((report, index) => (
               <ReportCard key={index} onPress={() => navigate('ReportDetail', { anamneseId: report._id })}>
                 <Text>Queixa(as)</Text>
-                <Text>{report.queixa.join('')}</Text>
+                <Text>{report.queixas.join('')}</Text>
               </ReportCard>
             ))}
-
-            <Fab onPress={() => navigate('Deaf')}>
-              <Feather name="plus" size={26} color="#f2f2f7" />
-            </Fab>
           </View>
         </ScrollView>
       ) : (
@@ -73,6 +69,12 @@ function Reports() {
           </Button>
         </View>
       )}
+
+      { reports.length >= 0 &&
+        <Fab onPress={() => navigate('Deaf')}>
+          <Feather name="plus" size={26} color="#f2f2f7" />
+        </Fab>  
+      }
       {/* <Menu openMenu={openMenu} menuHandle={menuHandle} /> */}
     </LinearGradient>
   );
@@ -85,10 +87,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  fab: {
-    shadowColor: 'red',
-    shadowRadius: 10,
-    shadowOffset: {width: 0, height: 0}
+  scroll: {
+    width: '100%',
+    height: 700,
   },
   image: {
     width: '80%',

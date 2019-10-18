@@ -12,9 +12,9 @@ import Slider from '@react-native-community/slider';
 import { useNavigation } from 'react-navigation-hooks'
 
 const Historia =  ({
-    next, getDuracao, duracaoSlider,
+    getDuracao, duracao,
     getFrequencia, frequencia,
-    getIntensidade, intensidadeSlider,
+    getIntensidade, intensidade,
     getLocalizacao, localizacao, makeAtendence,
 }) => {
 
@@ -30,7 +30,7 @@ const Historia =  ({
               <Text style={{...styles.text, fontSize: 30}}>-</Text>
             </TouchableOpacity>
             
-            <Text style={{...styles.text, fontSize: 18}}>{duracaoSlider} dias</Text>
+            <Text style={{...styles.text, fontSize: 18}}>{duracao} dias</Text>
 
             <TouchableOpacity onPress={() => getDuracao('+')}>
               <Text style={{...styles.text, fontSize: 20}}>+</Text>
@@ -39,9 +39,9 @@ const Historia =  ({
         </View>
 
         <View style={styles.field}>
-          <Text style={styles.text}>Intensidade: { intensidadeSlider <= 1 && ' Baixa' ||
-                  intensidadeSlider > 1 && intensidadeSlider <= 2 && ' Media' ||
-                  intensidadeSlider > 2 && ' Alta' }</Text>
+          <Text style={styles.text}>Intensidade: { intensidade <= 1 && ' Baixa' ||
+                  intensidade > 1 && intensidade <= 2 && ' Media' ||
+                  intensidade > 2 && ' Alta' }</Text>
           <View style={styles.squareField}>
             <Slider
               style={{width: '100%',}}
