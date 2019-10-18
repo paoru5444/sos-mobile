@@ -8,10 +8,14 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
+import { useNavigation } from 'react-navigation-hooks';
+
 function ChildrenMenu(props) {
+    const { navigate } = useNavigation()
+
     logout = async () => {
       await AsyncStorage.removeItem('userToken')
-      this.props.navigation.navigate('Auth')
+      navigate('Auth')
     }
 
     return (
@@ -31,7 +35,7 @@ function ChildrenMenu(props) {
             <Text style={styles.text}>Historico</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+          <TouchableOpacity onPress={() => navigate("Sobre")} style={styles.row}>
             <Feather name="info" size={26} color="#fff" style={{marginRight: 10}} />
             <Text style={styles.text}>Sobre</Text>
           </TouchableOpacity>

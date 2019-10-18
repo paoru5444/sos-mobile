@@ -2,7 +2,6 @@ import React, { useState, useEffect, } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from 'react-navigation-hooks';
-import { withNavigation } from 'react-navigation'
 
 import api from '../../../server/api'
 
@@ -21,7 +20,6 @@ export function reportsNavigation({ navigation }) {
   const closeHandle = navigation.getParam('closeMenu')
   const openMenu = navigation.getParam('openMenu')
 
-  console.log(openMenu)
   return {
     title: 'Registros Cadastrados',
     headerTitleStyle: {
@@ -31,7 +29,7 @@ export function reportsNavigation({ navigation }) {
       backgroundColor: '#216583',
     },
     headerTintColor: '#f2f2f7',
-    headerLeft: <TouchableOpacity onPress={() => !openMenu ? menuHandle() : closeHandle()}>
+    headerLeft: <TouchableOpacity style={{ left: 20 }} onPress={() => !openMenu ? menuHandle() : closeHandle()}>
                   <Feather name={!openMenu ? "menu" : "x"} size={30} color="#fff" />
                 </TouchableOpacity>
   }

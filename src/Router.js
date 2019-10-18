@@ -16,6 +16,9 @@ import ReportDetail, {reportDetailNavigation} from './components/pages/Home/Repo
 import DoctorScreen, { DoctorNavigationOptions } from './components/pages/Doctor/DoctorScreen'
 import Alimentation, { alimentationOptions } from './components/pages/Doctor/Alimentation'
 
+// Sobre
+import Sobre, { sobreOptions } from './components/pages/Sobre'
+
 const AppStack = createStackNavigator({
   Reports: {
     screen: Reports,
@@ -37,6 +40,10 @@ const AppStack = createStackNavigator({
   Alimentation: {
     screen: Alimentation,
     navigationOptions: alimentationOptions,
+  },
+  Sobre: {
+    screen: Sobre,
+    navigationOptions: sobreOptions,
   }
 });
 
