@@ -35,7 +35,7 @@ function Reports() {
 
   useEffect(() => {
     (async () => {
-      const anamnese = await api.get('/anamnese/show')
+      const anamnese = await api.get('/anamnese')
       setReport(anamnese.data)
     })()
 
