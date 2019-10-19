@@ -1,7 +1,11 @@
-import React from 'react';
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { Text } from '../../../common/Text'
+import Feather from 'react-native-vector-icons/Feather'
+
+import { Input } from '../../Auth/AuthStyle'
+
+import { Button } from '../../Home/HomeStyle'
 
 export function alimentationOptions({ navigate }) {
   return {
@@ -17,6 +21,15 @@ export function alimentationOptions({ navigate }) {
 }
 
 function Alimentation() {
+
+  const [aliments, setAliments] = useState([])
+  const [inputAliment, setInputAliment] = useState('')
+
+  function alimentsHandler() {
+    setAliments([...aliments, inputAliment])
+    setInputAliment('')
+  }
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.banner}>
@@ -30,6 +43,30 @@ function Alimentation() {
       </View>
 
       <View style={styles.row}>
+        <View style={styles.inputRow}>
+          <Feather name="frown" size={24} color="#bdbdbd" />
+          <Input
+            placeholder="Digite o nome dos alimentos"
+            onChangeText={(text) => setInputAliment(text)}
+            defaultValue=""
+          />
+        </View>
+        <TouchableOpacity onPress={() => alimentsHandler()} style={styles.addButton}>
+          <Feather name="plus" size={26} color="#f2f2f7" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
+        {aliments && aliments.map((queixa, index) => (
+          <Text style={styles.text} key={index}> {queixa} </Text>
+        ))}
+
+        <Button onPress={() => next()}>
+          <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Alimentos</Text>
+        </Button>
+      </View>
+
+      {/* <View style={styles.row}>
         <View style={styles.column}>
           <Image source={require('../../../../assets/images/piramide/carboidratos.png')} style={styles.imagePiramide} /> 
           <Text color="#2c2c2c" size="14px">Carboidratos</Text>
@@ -73,7 +110,7 @@ function Alimentation() {
           <Image source={require('../../../../assets/images/piramide/acucar.png')} style={styles.imagePiramide} /> 
           <Text color="#2c2c2c" size="14px">Açúcares e Doces</Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -83,7 +120,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   },
   row: {
     width: '100%',
@@ -124,6 +161,30 @@ const styles = StyleSheet.create({
   imagePiramide: {
     width: 90,
     height: 90,
+  },
+  inputRow: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 20,
+    marginBottom: 20,
+    backgroundColor: '#f2f2f7',
+    borderRadius: 30,
+    borderBottomColor: '#f2f2f7',
+  },
+  addButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#216583',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    alignSelf: "flex-start",
+    color: '#2c2c2c',
+    fontSize: 16
   }
 })
 

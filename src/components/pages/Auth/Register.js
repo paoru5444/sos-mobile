@@ -72,7 +72,12 @@ class RegisterScreen extends Component {
 
         this.setState({ registerRequest: false })
 
-        this.successAlert.alertWithType('success', 'Cadastro realizado com sucesso', 'Você será redirecionado para a tela inicial', setTimeout(() => {this.props.navigation.navigate('App')}, 3000))
+        this.successAlert.alertWithType(
+          'success',
+          'Cadastro realizado com sucesso',
+          'Você será redirecionado para a tela inicial',
+          setTimeout(() => {this.props.navigation.navigate('App')}, 3000)
+        )
       } catch(error) {
         this.errorAlert.alertWithType('error', 'Erro ao registrar!', error.response.data.error)
 
@@ -98,7 +103,7 @@ class RegisterScreen extends Component {
             >
               {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
                 <LinearGradient colors={['#216583', '#217e83']} angle={-225}  style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                  <Image source={require('../../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200, elevation: 4, }} />
+                  <Image source={require('../../../assets/images/Home/logo.png')} style={{ resizeMode: 'contain', width: 200, height: 200 }} />
 
                   <Row>
                     { errors.name && touched.name && (

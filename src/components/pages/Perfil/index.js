@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
-export function sobreOptions({ navigate }) {
+import api from '../../../server/api'
+
+export function perfilOptions({ navigate }) {
   return {
     title: 'Perfil',
     headerTintColor: '#f2f2f7',
@@ -15,6 +17,20 @@ export function sobreOptions({ navigate }) {
 }
 
 function Perfil() {
+  const [user, setUser] = useState({})
+  
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  async function getUser() {
+    try {
+      const response = await api.get('/user')
+      setUser(response.data)
+    } catch(error) {
+      console.log(error.response)
+    }
+  }
   return (
     <View style={styles.wrapper}>
       {/* <View style={styles.banner}>
@@ -22,10 +38,37 @@ function Perfil() {
         </ImageBackground>
       </View> */}
 
+      <View style={{...styles.row, justifyContent: 'center'}}>
+        <Image source={require('../../../assets/images/man.png')} style={styles.image} />
+      </View>
+
       <View style={styles.row}>
-        <Image source={require('../../../assets/images/logo.png')} style={styles.image} />
         <Text style={styles.text}>
-          O SOS LIBRAS tem por objetivo proporcionar uma comunicação mais clara e objetiva entre profissionais da saúde e pacientes surdos, cuja finalidade é sanar ou minimizar os problemas referentes à comunicação encontrados entre estes envolvidos no sistema de saúde.
+          Nome: 
+        </Text>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.text}>
+          Email: 
+        </Text>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.text}>
+          Carteira de Vascina: 
+        </Text>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.text}>
+          Tipo Sanguineo: 
+        </Text>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={styles.text}>
+          Telefone de Emergência: 
         </Text>
       </View>
     </View>
@@ -37,15 +80,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   },
   row: {
-    width: '95%',
+    width: '85%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 40,
     flexWrap: 'wrap',
+    borderBottomWidth: 0.5,
   },
   column: {
     width: '30%',
@@ -70,8 +114,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     marginVertical: 20
   },
   imagePiramide: {
@@ -80,7 +124,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#2c2c2c",
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center'
   }
 })

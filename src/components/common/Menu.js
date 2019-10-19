@@ -25,7 +25,7 @@ function ChildrenMenu(props) {
             <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
           </View>
         
-          <TouchableOpacity onPress={() => logout()} style={styles.row}>
+          <TouchableOpacity onPress={() => navigate("Perfil")} style={styles.row}>
             <Feather name="user" size={26} color="#fff" style={{marginRight: 10}} />
             <Text style={styles.text}>Perfil</Text>
           </TouchableOpacity>

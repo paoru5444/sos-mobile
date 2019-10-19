@@ -19,6 +19,9 @@ import Alimentation, { alimentationOptions } from './components/pages/Doctor/Ali
 // Sobre
 import Sobre, { sobreOptions } from './components/pages/Sobre'
 
+// Perfil
+import Perfil, { perfilOptions } from './components/pages/Perfil'
+
 const AppStack = createStackNavigator({
   Reports: {
     screen: Reports,
@@ -33,17 +36,21 @@ const AppStack = createStackNavigator({
     navigationOptions: DoctorNavigationOptions,
   },
   Deaf: DeafScreen,
-  FimQueixa: {
-    screen: FimQueixa,
-    navigationOptions: navigationOptions
-  },
   Alimentation: {
     screen: Alimentation,
     navigationOptions: alimentationOptions,
   },
+  FimQueixa: {
+    screen: FimQueixa,
+    navigationOptions: navigationOptions
+  },
   Sobre: {
     screen: Sobre,
     navigationOptions: sobreOptions,
+  },
+  Perfil: {
+    screen: Perfil,
+    navigationOptions: perfilOptions,
   }
 });
 

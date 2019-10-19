@@ -45,7 +45,7 @@ const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaIn
 
           <View style={styles.row}>
             <View style={styles.inputRow}>
-              <Icon name="frown" size={24} color="#f2f2f2" />
+              <Icon name="frown" size={24} color="#bdbdbd" />
               <Input
                 placeholder="O que sentir para vir aqui?"
                 onChangeText={(text) => getQueixaInput(text)}

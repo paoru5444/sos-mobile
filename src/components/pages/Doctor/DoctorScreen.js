@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Image, ScrollView, StyleSheet, TouchableOpacity, View,
 } from 'react-native'
@@ -22,43 +22,49 @@ export function DoctorNavigationOptions({ navigation }) {
   };
 }
 
-const DoctorScreen = () => {
+function DoctorScreen(props) {
   const [recommendations, setRecommendation] = useState([])
   const [drugs, setDrugs] = useState([])
   const [alimentation, setAlimentation] = useState([])
   const [complaint, setComplaint] = useState([])
+  const [anamnese, setAnamnese] = useState({queixas: []})
 
   const { navigate } = useNavigation()
-  
+
+  useEffect(() => {
+    setAnamnese(props.navigation.getParam('anamnese'))
+    console.log(anamnese)
+  }, [])
+
   return (
       <View style={styles.wrapper}>
         <View style={styles.grid}>
           <View style={styles.row}>
             <Text color="#2c2c2c">Queixas: </Text>  
-            <Text color="#2c2c2c" size="14">Teste</Text>
+            <Text color="#2c2c2c" size="14">{anamnese.queixas.join('')}</Text>
           </View>
 
           <View style={styles.row}>
             <View style={styles.column}>
               <Text color="#2c2c2c">Duracao</Text>  
-              <Text color="#2c2c2c" size="14">Teste</Text>
+              <Text color="#2c2c2c" size="14">{anamnese.duracao}</Text>
             </View>
 
             <View style={styles.column}>
               <Text color="#2c2c2c">Intensidade</Text>  
-              <Text color="#2c2c2c" size="14">Teste</Text>
+              <Text color="#2c2c2c" size="14">{anamnese.intensidade}</Text>
             </View> 
           </View>
 
           <View style={styles.row}>
             <View style={styles.column}>
               <Text color="#2c2c2c">Frequencia</Text>  
-              <Text color="#2c2c2c" size="14">Teste</Text>
+              <Text color="#2c2c2c" size="14">{anamnese.frequencia}</Text>
             </View> 
 
             <View style={styles.column}>
-              <Text color="#2c2c2c">Melhora ou Piora</Text>  
-              <Text color="#2c2c2c" size="14">Teste</Text>
+              <Text color="#2c2c2c">Localização</Text>  
+              <Text color="#2c2c2c" size="14">{anamnese.localizacao}</Text>
             </View>
           </View> 
         </View>

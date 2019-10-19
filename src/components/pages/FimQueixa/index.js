@@ -32,7 +32,7 @@ export default function FimQueixa(props) {
   async function submitAnamnese(route) {
     try {
       const response = await api.post('/anamnese', anamnese)
-      push(route)
+      props.navigation.navigate(route, { anamnese: response.data })
     } catch(error) {
       console.log(error.response)
     }
