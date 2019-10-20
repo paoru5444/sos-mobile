@@ -94,16 +94,26 @@ class DeafScreen extends Component {
 
   getDuracao = (sign) => {
     const { duracao } = this.state
-    if (duracao >= 1) {
+    if (duracao === 1) {
       this.setState({
-        duracao: sign === '+' ? duracao + 1 : duracao - 1 ,
+        duracao: sign === '+' ? duracao + 1 : duracao,
+      })
+    }
+    if (duracao > 1) {
+      this.setState({
+        duracao: sign === '+' ? duracao + 1 : duracao - 1,
       })
     }
   }
 
   getFrequencia = (sign) => {
     const { frequencia } = this.state
-    if (frequencia >= 1) {
+    if (frequencia === 1) {
+      this.setState({
+        frequencia: sign === '+' ? frequencia + 1 : frequencia,
+      })
+    }
+    if (frequencia > 1) {
       this.setState({
         frequencia: sign === '+' ? frequencia + 1 : frequencia - 1 ,
       })

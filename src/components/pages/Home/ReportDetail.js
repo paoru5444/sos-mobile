@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import api from '../../../server/api'
 
@@ -17,14 +17,16 @@ export function reportDetailNavigation() {
 }
 
 export default function ReportDetail(props) {
-  const [alimentation, setAlimentation] = useState([])
+  const [alimentations, setAlimentation] = useState([])
   const [drugs, setDrugs] = useState([])
+  const [recomendation, setRecomendation] = useState([])
   const [anamnese, setAnamnese] = useState({queixas: [], localizacao: []})
 
   useEffect(() => {
     getAnamnese()
     getAlimentation()
     getDrugs()
+    getRecomendation()
   }, [])
 
   async function getAnamnese(){
@@ -41,9 +43,9 @@ export default function ReportDetail(props) {
   async function getAlimentation(){
     try {
       const anamneseId = props.navigation.getParam('anamneseId')
-      console.log(anamneseId)
-      const alimentation = await api.get(`/alimentation/${anamneseId}`)
-      setAlimentation(alimentation)
+      const response = await api.get(`/alimentation/${anamneseId}`)
+      setAlimentation(response.data)
+      console.log(response.data)
     } catch(error) {
       console.log(error.response.data)
     }
@@ -52,14 +54,27 @@ export default function ReportDetail(props) {
   async function getDrugs(){
     try {
       const anamneseId = props.navigation.getParam('anamneseId')
-      const drugs = await api.get(`/drugs/${anamneseId}`)
-      getDrugs(drugs)
+      const response = await api.get(`/drugs/${anamneseId}`)
+      console.log(response.data)
+      setDrugs(response.data)
+    } catch(error) {
+      console.log(error.response.data)
+    }
+  }
+
+  async function getRecomendation(){
+    try {
+      const anamneseId = props.navigation.getParam('anamneseId')
+      const response = await api.get(`/recomendation/${anamneseId}`)
+      console.log('recomendation', response.data)
+      setRecomendation(response.data[0])
     } catch(error) {
       console.log(error.response.data)
     }
   }
 
   return (
+    <ScrollView>
     <View style={styles.wrapper}>
 
       <View style={styles.row}>
@@ -92,25 +107,63 @@ export default function ReportDetail(props) {
         </Text>
       </View>
 
-      <View style={styles.row}>
-        <Text style={{...styles.text, fontSize: 22}}>
-          Informações do Médico
-        </Text>
-      </View>
+      { drugs.length !== 0 && alimentations.length !== 0 && recomendation.length !== 0 && (
+        <View style={styles.row}>
+          <Text style={{...styles.text, fontSize: 22}}>
+            Informações do Médico
+          </Text>
+        </View>
+      )}
+      
+      { drugs.length !== 0 && (
+        <>
+          <View style={styles.row}>
+            <Image source={require('../../../assets/images/medicine.png')} style={styles.image} /> 
+            <Text style={{...styles.text, fontSize: 20 }}>Remédios</Text>
+          </View>
+          
+          {drugs.map((drug, index) => (
+            <View key={index} style={styles.card}>
+              <Text style={styles.text}>Nome: { drug.name }</Text>
+              <Text style={styles.text}>Modo de uso: { drug.useMode }</Text>
+              <Text style={styles.text}>Descrição: { drug.description }</Text>
+            </View>
+          ))}
+        </>
+      )}
 
-      <Text style={styles.title}>
-        Remédios
-      </Text>
+      { alimentations.length !== 0 && (
+        <>
+          <View style={styles.row}>
+            <Image source={require('../../../assets/images/diet.png')} style={styles.image} /> 
+            <Text style={{...styles.text, fontSize: 20 }}>Alimentos</Text>
+          </View>
 
+          {alimentations.map((alimentation, index) => (
+            <View key={index} style={styles.card}>
+              <Text style={styles.text}>Nome: { alimentation.name }</Text>
+              <Text style={styles.text}>Classificação: { alimentation.foodType }</Text>
+            </View>
+          ))}
+        </>
+      )}
+      
+      { recomendation.length !== 0 && (
+        <>
+          <View style={styles.row}>
+            <Image source={require('../../../assets/images/clipboard.png')} style={styles.image} /> 
+            <Text style={{...styles.text, fontSize: 20 }}>Recomendação</Text>
+          </View>
 
-      <Text style={styles.title}>
-        Alimentação
-      </Text>
-
-      <Text style={styles.title}>
-        Recomendação
-      </Text>
+          <View style={styles.row}>
+            <Text style={styles.text}>
+              Recomendação: { recomendation.recomendation }
+            </Text>
+          </View>
+        </>
+      )}
     </View>
+    </ScrollView>
   );
 }
 
@@ -134,5 +187,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     flexWrap: 'wrap',
+  },
+  card: {
+    width: '95%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 0.2,
+    borderRadius: 10,
+    flexWrap: 'wrap',
+  },
+  image: {
+    width: 60,
+    height: 60,
+    marginRight: 10,
   },
 })

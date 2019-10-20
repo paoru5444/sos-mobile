@@ -15,6 +15,7 @@ import ReportDetail, {reportDetailNavigation} from './components/pages/Home/Repo
 // Doctor part
 import DoctorScreen, { DoctorNavigationOptions } from './components/pages/Doctor/DoctorScreen'
 import Alimentation, { alimentationOptions } from './components/pages/Doctor/Alimentation'
+import Drugs, { drugsOptions } from './components/pages/Doctor/Drugs'
 
 // Sobre
 import Sobre, { sobreOptions } from './components/pages/Sobre'
@@ -51,6 +52,10 @@ const AppStack = createStackNavigator({
   Perfil: {
     screen: Perfil,
     navigationOptions: perfilOptions,
+  },
+  Drugs: {
+    screen: Drugs,
+    navigationOptions: drugsOptions
   }
 });
 

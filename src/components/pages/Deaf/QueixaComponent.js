@@ -16,7 +16,7 @@ import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const images = [
   {name: "Dor de Cabeça", img: require("../../../assets/images/Queixa/dor-cabeca.jpg") },
-  {name: "Fraquesa", img: require("../../../assets/images/Queixa/fraquesa.jpg") },
+  {name: "Fraqueza", img: require("../../../assets/images/Queixa/fraquesa.jpg") },
   {name: "Tosse", img: require("../../../assets/images/Queixa/tosse.jpg") },
   {name: "Tontura", img: require("../../../assets/images/Queixa/tontura.jpg") },
   {name: "Alopecia", img: require("../../../assets/images/Queixa/alopecia.jpg") },

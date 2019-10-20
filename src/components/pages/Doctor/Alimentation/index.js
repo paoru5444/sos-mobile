@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Image, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 
-import Feather from 'react-native-vector-icons/Feather'
+import api from '../../../../server/api'
 
 import { Input } from '../../Auth/AuthStyle'
 
 import { Button } from '../../Home/HomeStyle'
+
+import { DotIndicator } from 'react-native-indicators'
 
 export function alimentationOptions({ navigate }) {
   return {
@@ -20,18 +22,36 @@ export function alimentationOptions({ navigate }) {
   }
 }
 
-function Alimentation() {
+function Alimentation(props) {
 
-  const [aliments, setAliments] = useState([])
-  const [inputAliment, setInputAliment] = useState('')
+  const [name, setName] = useState('')
+  const [foodType, setFoodType] = useState('')
+  const [anamnese, setAnamnese] = useState({})
+  const [sendLoad, setSendLoad] = useState(false)
 
-  function alimentsHandler() {
-    setAliments([...aliments, inputAliment])
-    setInputAliment('')
+  const foodTypeRef = useRef()
+
+  useEffect(() => {
+    setAnamnese(props.navigation.getParam('anamnese'))
+  }, [])
+
+  async function saveHandler() {
+    try {
+      setSendLoad(true)
+      const save = await api.post('/alimentation', {
+        name, foodType, anamneseId: anamnese._id
+      })
+      setSendLoad(false)
+      props.navigation.goBack()
+    } catch(error) {
+      setSendLoad(false)
+      console.log(error)
+    }
   }
 
   return (
-    <View style={styles.wrapper}>
+    <KeyboardAvoidingView>
+      <View style={styles.wrapper}>
       <View style={styles.banner}>
         <ImageBackground style={styles.imageBanner} source={require('../../../../assets/images/alimentation.png')}>
         </ImageBackground>
@@ -42,76 +62,44 @@ function Alimentation() {
         <Text color="#2c2c2c" size="20px">Selecione os alimentos{'\n'}que serão evitados.</Text>
       </View>
 
-      <View style={styles.row}>
+      <View style={{...styles.row, marginBottom: 0}}>
+        <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start', left: 10}}>Nome do alimento</Text>
         <View style={styles.inputRow}>
-          <Feather name="frown" size={24} color="#bdbdbd" />
           <Input
-            placeholder="Digite o nome dos alimentos"
-            onChangeText={(text) => setInputAliment(text)}
-            defaultValue=""
+            placeholder="ex: Carne vermelha"
+            onChangeText={(text) => setName(text)}
+            value={name}
+            returnKeyType="next"
+            onEndEditing={() => foodTypeRef.current.focus()}
           />
         </View>
-        <TouchableOpacity onPress={() => alimentsHandler()} style={styles.addButton}>
-          <Feather name="plus" size={26} color="#f2f2f7" />
-        </TouchableOpacity>
+      </View>
+
+      <View style={{...styles.row, marginBottom: 0}}>
+        <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start', left: 10}}>Classificação do alimento</Text>
+        <View style={styles.inputRow}>
+          <Input
+            placeholder="ex: Vegetal"
+            onChangeText={(text) => setFoodType(text)}
+            value={foodType}
+            returnKeyType="send"
+            onEndEditing={() => saveHandler()}
+            ref={ref => foodTypeRef.current = ref}
+          />
+        </View>
       </View>
 
       <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
-        {aliments && aliments.map((queixa, index) => (
-          <Text style={styles.text} key={index}> {queixa} </Text>
-        ))}
-
-        <Button onPress={() => next()}>
-          <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Alimentos</Text>
+        <Button onPress={() => saveHandler()}>
+          { sendLoad ? (
+            <DotIndicator count={3} color='white' size={8} />
+          ) : (
+            <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Alimentos</Text>
+          )}
         </Button>
       </View>
-
-      {/* <View style={styles.row}>
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/carboidratos.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Carboidratos</Text>
-        </View>
-
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/vegetais.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Verduras e Legumes</Text>
-        </View>
-
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/frutas.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Frutas</Text>
-        </View>
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/leite.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Leite e derivados</Text>
-        </View>
-
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/carne.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Carnes e Ovos</Text>
-        </View>
-
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/leguminosas.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Leguminosos e Oleaginosas</Text>
-        </View>
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/oleo.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Óleos e Gorduras</Text>
-        </View>
-
-        <View style={styles.column}>
-          <Image source={require('../../../../assets/images/piramide/acucar.png')} style={styles.imagePiramide} /> 
-          <Text color="#2c2c2c" size="14px">Açúcares e Doces</Text>
-        </View>
-      </View> */}
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -163,7 +151,7 @@ const styles = StyleSheet.create({
     height: 90,
   },
   inputRow: {
-    width: '80%',
+    width: '95%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

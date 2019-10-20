@@ -23,8 +23,8 @@ const Historia =  ({
   return (
     <View style={styles.wrapper}>
         <View style={styles.field}>
-          <Text style={styles.text}>Duração</Text>
-
+          <Text style={styles.text}>Por quanto{'\n'}tempo durou?</Text>
+          <Feather name="calendar" size={40} color="#2c2c2c" />
           <View style={styles.squareField}>
             <TouchableOpacity onPress={() => getDuracao('-')}>
               <Text style={{...styles.text, fontSize: 30}}>-</Text>
@@ -38,11 +38,21 @@ const Historia =  ({
           </View>
         </View>
 
-        <View style={styles.field}>
-          <Text style={styles.text}>Intensidade: { intensidade <= 1 && ' Baixa' ||
-                  intensidade > 1 && intensidade <= 2 && ' Media' ||
-                  intensidade > 2 && ' Alta' }</Text>
-          <View style={styles.squareField}>
+        <View style={{...styles.field, marginBottom: 0}}>
+          <Text style={styles.text}>Quando você se sentiu mal, doeu quanto?</Text>
+        </View>
+
+        <View style={{...styles.field, marginVertical: 0, justifyContent: 'flex-start'}}>
+          <Feather name="frown" size={40} color="#2c2c2c" />
+          <Text style={styles.text}>
+            { intensidade <= 1 && ' Pouco' ||
+              intensidade > 1 && intensidade <= 2 && 'Mais ou menos' ||
+              intensidade > 2 && ' Bastante'
+            }
+          </Text>
+        </View>
+
+        <View style={{ ...styles.squareField, width: '80%', bottom: 20 }}>
             <Slider
               style={{width: '100%',}}
               minimumValue={1}
@@ -52,10 +62,10 @@ const Historia =  ({
               onValueChange={(value) => getIntensidade(value)}
             />
           </View>
-        </View>
 
         <View style={styles.field}>
-          <Text style={styles.text}>Frequencia</Text>
+          <Text style={styles.text}>De quanto em{'\n'}quanto tempo</Text>
+          <Feather name="watch" size={40} color="#2c2c2c" />
           <View style={styles.squareField}>
             <TouchableOpacity onPress={() => getFrequencia('-')}>
               <Text style={{...styles.text, fontSize: 30}}>-</Text>
@@ -69,7 +79,7 @@ const Historia =  ({
           </View>
         </View>
 
-        <View style={styles.field}>
+        {/* <View style={styles.field}>
           <Text style={styles.text}>Localização</Text>
           <View style={styles.squareField}>
             <TouchableOpacity onPress={() => getLocalizacao('membros')} style={{ alignItems: 'center'}}>
@@ -87,7 +97,7 @@ const Historia =  ({
               <Text>Cabeça {localizacao[2] && <Feather name="check" size={20} color="green" />}</Text> 
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
 
         <Button onPress={() => makeAtendence()}>
             <Text style={{...styles.text, color: '#f2f2f7'}}>Finalizar Queixa</Text>
@@ -136,10 +146,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#2c2c2c',
-    fontSize: 16,
+    fontSize: 20,
   },
   squareField: {
-    width: '60%',
+    width: '50%',
     height: '10%',
     alignItems: 'center',
     justifyContent: 'space-around',

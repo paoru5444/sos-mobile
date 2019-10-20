@@ -62,7 +62,7 @@ function Reports(props) {
 
   return (
     <LinearGradient colors={['#216583', '#217e83']} style={styles.wrapper}>
-      { reports.length >= 0 ? (
+      { reports.length !== 0 ? (
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           <View style={styles.cardView}>
             { reports.map((report, index) => (
@@ -82,7 +82,7 @@ function Reports(props) {
         </View>
       )}
 
-      { reports.length >= 0 &&
+      { reports.length !== 0 &&
         <Fab onPress={() => navigate('Deaf')}>
           <Feather name="plus" size={26} color="#f2f2f7" />
         </Fab>  
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   },
   scroll: {
     width: '100%',
-    height: 700,
   },
   image: {
     width: '80%',
