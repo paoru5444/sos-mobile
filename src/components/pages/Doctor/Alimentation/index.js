@@ -9,6 +9,16 @@ import { Button } from '../../Home/HomeStyle'
 
 import { DotIndicator } from 'react-native-indicators'
 
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const SignInSchemma = yup.object().shape({
+  name: yup.string()
+    .required('Nome obrigatório'),
+  foodType: yup.string()
+    .required('Classificação obrigatória'),
+})
+
 export function alimentationOptions({ navigate }) {
   return {
     title: 'Alimentos',
@@ -35,14 +45,19 @@ function Alimentation(props) {
     setAnamnese(props.navigation.getParam('anamnese'))
   }, [])
 
-  async function saveHandler() {
+  async function saveHandler(values) {
     try {
       setSendLoad(true)
       const save = await api.post('/alimentation', {
-        name, foodType, anamneseId: anamnese._id
+        name: values.name,  foodType: values.foodType, anamneseId: anamnese._id
       })
+
+      setName('')
+      setFoodType('')
+
       setSendLoad(false)
-      props.navigation.goBack()
+      props.navigation.state.params.onGoBack();
+      props.navigation.goBack();
     } catch(error) {
       setSendLoad(false)
       console.log(error)
@@ -62,42 +77,65 @@ function Alimentation(props) {
         <Text color="#2c2c2c" size="20px">Selecione os alimentos{'\n'}que serão evitados.</Text>
       </View>
 
-      <View style={{...styles.row, marginBottom: 0}}>
-        <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start', left: 10}}>Nome do alimento</Text>
-        <View style={styles.inputRow}>
-          <Input
-            placeholder="ex: Carne vermelha"
-            onChangeText={(text) => setName(text)}
-            value={name}
-            returnKeyType="next"
-            onEndEditing={() => foodTypeRef.current.focus()}
-          />
-        </View>
-      </View>
+      <Formik
+        initialValues={{ name: '', foodType: '' }}
+        onSubmit={values => saveHandler(values)}
+        validationSchema={SignInSchemma}
+      >
+        {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
+          <>
+            <View style={{...styles.row, marginBottom: 0}}>
+              <Text style={{ alignSelf: 'flex-start', left: 10}}>Nome do alimento</Text>
+              <View style={styles.inputRow}>
+                <Input
+                  placeholder="ex: Carne vermelha"
+                  onChangeText={handleChange('name')}
+                  value={values.name}
+                  returnKeyType="next"
+                  onEndEditing={() => foodTypeRef.current.focus()}
+                />
+              </View>
 
-      <View style={{...styles.row, marginBottom: 0}}>
-        <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start', left: 10}}>Classificação do alimento</Text>
-        <View style={styles.inputRow}>
-          <Input
-            placeholder="ex: Vegetal"
-            onChangeText={(text) => setFoodType(text)}
-            value={foodType}
-            returnKeyType="send"
-            onEndEditing={() => saveHandler()}
-            ref={ref => foodTypeRef.current = ref}
-          />
-        </View>
-      </View>
+              <View style={{...styles.row, marginBottom: 0}}>
+                { errors.name && touched.name && (
+                  <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}}>{errors.name}</Text>
+                )}
+              </View>
+            </View>
 
-      <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
-        <Button onPress={() => saveHandler()}>
-          { sendLoad ? (
-            <DotIndicator count={3} color='white' size={8} />
-          ) : (
-            <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Alimentos</Text>
-          )}
-        </Button>
-      </View>
+            <View style={{...styles.row, marginBottom: 0}}>
+              <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start', left: 10}}>Classificação do alimento</Text>
+              <View style={styles.inputRow}>
+                <Input
+                  placeholder="ex: Vegetal"
+                  onChangeText={handleChange('foodType')}
+                  value={values.foodType}
+                  returnKeyType="send"
+                  onEndEditing={() => handleSubmit()}
+                  ref={ref => foodTypeRef.current = ref}
+                />
+              </View>
+              
+              <View style={{...styles.row, marginBottom: 0}}>
+                { errors.foodType && touched.foodType && (
+                  <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}} color="#e74c3c">{errors.foodType}</Text>
+                )}
+              </View>
+              
+            </View>
+
+            <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
+              <Button onPress={() => handleSubmit()}>
+                { sendLoad ? (
+                  <DotIndicator count={3} color='white' size={8} />
+                ) : (
+                  <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Alimentos</Text>
+                )}
+              </Button>
+            </View>
+          </>
+        )}
+      </Formik>
     </View>
     </KeyboardAvoidingView>
   );

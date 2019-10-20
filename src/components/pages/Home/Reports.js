@@ -38,18 +38,28 @@ export function reportsNavigation({ navigation }) {
 function Reports(props) {
   const [reports, setReport] = useState([])
   const [openMenu, setOpenMenu] = useState(false)
+  const [noAnamnese, setNoAnamnese] = useState(false)
 
   const { navigate, setParams } = useNavigation()
 
   useEffect(() => {
-    (async () => {
+    setParams({ menu: menuHandle, closeMenu: closeHandle, openMenu })
+    getReports()
+  }, [openMenu])
+
+  useEffect(() => {
+    getReports()
+  }, [reports])
+
+  async function getReports() {
+    try {
       const anamnese = await api.get('/anamnese')
       setReport(anamnese.data)
-    })()
-
-    setParams({ menu: menuHandle, closeMenu: closeHandle, openMenu })
-
-  }, [openMenu])
+      setNoAnamnese(anamnese.data.length)
+    } catch(error) {
+      console.log(error)
+    }
+  }
 
   function menuHandle() {
     setOpenMenu(true)
@@ -62,7 +72,7 @@ function Reports(props) {
 
   return (
     <LinearGradient colors={['#216583', '#217e83']} style={styles.wrapper}>
-      { reports.length !== 0 ? (
+      { reports && reports.length > 0 && (
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           <View style={styles.cardView}>
             { reports.map((report, index) => (
@@ -73,7 +83,9 @@ function Reports(props) {
             ))}
           </View>
         </ScrollView>
-      ) : (
+      )}
+
+      { noAnamnese === 0 && (
         <View style={styles.view}>
           <Image source={require('../../../assets/images/no-complains.png')} style={styles.image} />
           <Button onPress={() => navigate('Deaf')} style={styles.button}>

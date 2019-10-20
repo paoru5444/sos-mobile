@@ -110,7 +110,8 @@ export default function ReportDetail(props) {
             <View key={index} style={styles.card}>
               <Text style={styles.text}>Nome: { drug.name }</Text>
               <Text style={styles.text}>Modo de uso: { drug.useMode }</Text>
-              <Text style={styles.text}>Descrição: { drug.description }</Text>
+              <Text style={styles.text}>Período: { drug.period }</Text>
+              <Text style={styles.text}>Dosagem: { drug.dosage }</Text>
             </View>
           ))}
         </>
@@ -139,7 +140,7 @@ export default function ReportDetail(props) {
             <Text style={{...styles.text, fontSize: 20 }}>Recomendação</Text>
           </View>
 
-          <View style={styles.row}>
+          <View style={styles.card}>
             <Text style={styles.text}>
               Recomendação: { recomendation.recomendation }
             </Text>
@@ -185,8 +186,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 45,
+    height: 45,
     marginRight: 10,
   },
 })

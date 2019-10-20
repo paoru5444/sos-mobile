@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Image, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -11,6 +11,20 @@ import { Button } from '../../Home/HomeStyle'
 import api from '../../../../server/api'
 
 import { DotIndicator } from 'react-native-indicators'
+
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const SignInSchemma = yup.object().shape({
+  name: yup.string()
+    .required('Nome obrigatório'),
+  useMode: yup.string()
+    .required('Modo de uso obrigatório'),
+  period: yup.string()
+    .required('Periodo obrigatóro'),
+  dosage: yup.string()
+    .required('Dosagem obrigatória'),
+})
 
 export function drugsOptions({ navigate }) {
   return {
@@ -30,25 +44,37 @@ function Drugs(props) {
   const [anamnese, setAnamnese] = useState([])
   const [name, setName] = useState('')
   const [useMode, setUseMode] = useState('')
-  const [description, setDescription] = useState('')
+  const [period, setPeriod] = useState('')
+  const [dosage, setDosage] = useState('')
   const [sendLoad, setSendLoad] = useState(false)
 
   const useModeRef = useRef()
-  const descriptionRef = useRef()
+  const periodRef = useRef()
+  const dosageRef = useRef()
 
   useEffect(() => {
     setAnamnese(props.navigation.getParam('anamnese'))
   }, [])
 
-  async function saveHandler() {
+  async function saveHandler(values) {
     try {
       setSendLoad(true)
       const save = await api.post('/drugs', {
-        name, useMode, description, anamneseId: anamnese._id
+        name: values.name,
+        useMode: values.useMode,
+        period: values.period,
+        dosage: values.dosage,
+        anamneseId: anamnese._id
       })
 
+      setName('')
+      setUseMode('')
+      setPeriod('')
+      setDosage('')
+
       setSendLoad(false)
-      props.navigation.goBack()
+      props.navigation.state.params.onGoBack();
+      props.navigation.goBack();
     } catch(error) {
       setSendLoad(false)
       console.log(error.response)
@@ -56,69 +82,118 @@ function Drugs(props) {
   }
 
   return (
-    <KeyboardAvoidingView>
+    <ScrollView style={styles.scroll}>
       <View style={styles.wrapper}>
-        <View style={styles.banner}>
+          <View style={styles.banner}>
             <ImageBackground style={styles.imageBanner} source={require('../../../../assets/images/medicine-background.png')} />
           </View>
 
-          <View style={styles.row}>
-            <Image source={require('../../../../assets/images/medicine.png')} style={styles.image} /> 
-            <Text color="#2c2c2c" size="20px">Quais remédios o pasciente{'\n'}deve comprar?</Text>
-          </View>
+          <Formik
+            initialValues={{ name: '', useMode: '', period: '', dosage: '' }}
+            onSubmit={values => saveHandler(values)}
+            validationSchema={SignInSchemma}
+            style={styles.wrapper}
+          >
+            {({ handleSubmit, handleBlur, handleChange, values, errors, touched}) => (
+              <>
+                <View style={styles.row}>
+                  <Image source={require('../../../../assets/images/medicine.png')} style={styles.image} /> 
+                  <Text color="#2c2c2c" size="20px">Quais remédios o pasciente{'\n'}deve comprar?</Text>
+                </View>
 
-          <View style={{...styles.row, marginBottom: 0}}>
-            <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Nome do remédio</Text>
-            <View style={styles.inputRow}>
-              <Input
-                placeholder="ex: Loratadina"
-                onChangeText={(text) => setName(text)}
-                value={name}
-                returnKeyType="next"
-                onEndEditing={() => useModeRef.current.focus()}
-              />
-            </View>
-          </View>
+                <View style={{...styles.row, marginBottom: 0}}>
+                  <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Nome do remédio</Text>
+                  <View style={styles.inputRow}>
+                    <Input
+                      placeholder="ex: Loratadina"
+                      onChangeText={handleChange('name')}
+                      value={values.name}
+                      returnKeyType="next"
+                      onEndEditing={() => useModeRef.current.focus()}
+                    />
+                  </View>
 
-          <View style={{...styles.row, marginBottom: 0}}>
-            <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Modo de uso do remédio</Text> 
-            <View style={styles.inputRow}>
-              <Input
-                placeholder="ex: Uso oral"
-                onChangeText={(text) => setUseMode(text)}
-                value={useMode}
-                returnKeyType="next"
-                onEndEditing={() => descriptionRef.current.focus()}
-                ref={ref => useModeRef.current = ref}
-              />
-            </View>
-          </View>
+                  <View style={{...styles.row, marginBottom: 0}}>
+                    { errors.name && touched.name && (
+                      <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}}>{errors.name}</Text>
+                    )}
+                  </View>
+                </View>
 
-          <View style={{...styles.row, marginBottom: 0}}>
-            <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Descrição do remédio</Text>
-            <View style={styles.inputRow}>
-              <Input
-                placeholder="ex: Analgesico para febre"
-                onChangeText={(text) => setDescription(text)}
-                value={description}
-                returnKeyType="send"
-                onEndEditing={() => saveHandler()}
-                ref={ref => descriptionRef.current = ref}
-              />
-            </View>
-          </View>
+                <View style={{...styles.row, marginBottom: 0}}>
+                  <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Modo de uso do remédio</Text> 
+                  <View style={styles.inputRow}>
+                    <Input
+                      placeholder="ex: Uso oral"
+                      onChangeText={handleChange('useMode')}
+                      value={values.useMode}
+                      returnKeyType="next"
+                      onEndEditing={() => periodRef.current.focus()}
+                      ref={ref => useModeRef.current = ref}
+                    />
+                  </View>
 
-          <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
-            <Button onPress={() => saveHandler()}>
-              { sendLoad ? (
-                <DotIndicator count={3} color='white' size={8} />
-              ) : (
-                <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Medicamento</Text>
-              )}
-            </Button>
-          </View>
+                  <View style={{...styles.row, marginBottom: 0}}>
+                    { errors.useMode && touched.useMode && (
+                      <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}}>{errors.useMode}</Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{...styles.row, marginBottom: 0}}>
+                  <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Período de uso</Text>
+                  <View style={styles.inputRow}>
+                    <Input
+                      placeholder="ex: De 8 em 8 horas"
+                      onChangeText={handleChange('period')}
+                      value={values.period}
+                      returnKeyType="next"
+                      onEndEditing={() => dosageRef.current.focus()}
+                      ref={ref => periodRef.current = ref}
+                    />
+                  </View>
+
+                  <View style={{...styles.row, marginBottom: 0}}>
+                    { errors.period && touched.period && (
+                      <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}}>{errors.period}</Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{...styles.row, marginBottom: 0}}>
+                  <Text color="#2c2c2c" size="18px" style={{ alignSelf: 'flex-start'}}>Dosagem</Text>
+                  <View style={styles.inputRow}>
+                    <Input
+                      placeholder="ex: 300g"
+                      onChangeText={handleChange('dosage')}
+                      value={values.dosage}
+                      returnKeyType="send"
+                      onEndEditing={() => handleSubmit()}
+                      ref={ref => dosageRef.current = ref}
+                    />
+                  </View>
+
+                  <View style={{...styles.row, marginBottom: 0}}>
+                    { errors.dosage && touched.dosage && (
+                      <Text style={{...styles.text, color: "#e74c3c", marginBottom: 10}}>{errors.dosage}</Text>
+                    )}
+                  </View>
+                </View>
+
+                <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
+                  <Button onPress={() => handleSubmit()}>
+                    { sendLoad ? (
+                      <DotIndicator count={3} color='white' size={8} />
+                    ) : (
+                      <Text style={{color: '#f2f2f7', fontSize: 16 }}>Salvar Medicamento</Text>
+                    )}
+                  </Button>
+                </View>
+              </>
+            )}
+          </Formik>          
       </View>
-    </KeyboardAvoidingView>
+      </ScrollView>
   );
 }
 
@@ -127,14 +202,19 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 140,
+  },
+  scroll: {
+    width: '100%',
+    height: '100%',
   },
   row: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: 20,
+    paddingLeft: 30,
     marginBottom: 20,
     flexWrap: 'wrap',
   },
