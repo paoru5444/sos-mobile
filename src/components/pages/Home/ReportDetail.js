@@ -83,28 +83,11 @@ export default function ReportDetail(props) {
         </Text>
       </View>
 
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          Queixas: { anamnese.queixas.join(' ')  || "Queixas não cadastradas"}
-        </Text>
-      </View>
-
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          Duração: { anamnese.duracao } Dias
-        </Text>
-      </View>
-
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          Frequencia: { anamnese.duracao } em { anamnese.duracao } Dias
-        </Text>
-      </View>
-
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          Localização: { anamnese.localizacao.join(' e ') }
-        </Text>
+      <View style={styles.card}>
+        <Text style={styles.text}>Queixas: { anamnese.queixas.join(' ')  || "Queixas não cadastradas"}</Text>
+        <Text style={styles.text}>Duração: { anamnese.duracao } Dias</Text>
+        <Text style={styles.text}>Frequencia: { anamnese.frequencia } em { anamnese.frequencia } Dias</Text>
+        <Text style={styles.text}>Intnesidade: { anamnese.intensidade }</Text>
       </View>
 
       { drugs.length !== 0 && alimentations.length !== 0 && recomendation.length !== 0 && (
@@ -114,6 +97,7 @@ export default function ReportDetail(props) {
           </Text>
         </View>
       )}
+      
       
       { drugs.length !== 0 && (
         <>

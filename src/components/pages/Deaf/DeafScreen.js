@@ -7,11 +7,10 @@ import {
   Text,
 } from '../Home/HomeStyle'
 
-import LinearGradient from 'react-native-linear-gradient'
+import Feather from 'react-native-vector-icons/Feather'
 
 import QueixaComponent from './QueixaComponent'
 import Historia from './Historia'
-import api from '../../../server/api'
 
 class DeafScreen extends Component {
 
@@ -67,7 +66,11 @@ class DeafScreen extends Component {
 
     this.makeAtendence = this.makeAtendence.bind(this)
 
+    this.removeQueixa = this.removeQueixa.bind(this)
+
     this.goTo = this.goTo.bind(this)
+
+    this.newQueixas = []
   }
 
   next = () => {
@@ -140,7 +143,30 @@ class DeafScreen extends Component {
   }
 
   adicionarQueixa = () => {
-    this.setState({queixas: [...this.state.queixas, this.state.queixaInput]})
+    const { queixas, queixaInput } = this.state;
+
+    if(queixaInput === '') {
+      alert('Não pode adicionar sem dizer o que sente primeiro')
+      return
+    }
+
+    const hasSameQueixa = queixas.some(o => o === queixaInput)
+
+    if(!hasSameQueixa) {
+      this.setState({
+        queixas: [...this.state.queixas, this.state.queixaInput],
+        queixaInput: ''
+      })
+    } else {
+      alert('Queixa ja selecionada')
+    }
+  }
+
+  removeQueixa = (queixa) => {
+    this.newQueixas = [...this.newQueixas,  queixa]
+    const { queixas } = this.state;
+    const filteredItems = queixas.filter(queixa => !this.newQueixas.includes(queixa) )
+    this.setState({queixas: filteredItems})
   }
   
   goTo(route = "", params = {}) {
@@ -149,7 +175,6 @@ class DeafScreen extends Component {
 
   makeAtendence = async () => {
     const {queixas, duracao, frequencia, intensidade, localizacao } = this.state
-  
     this.goTo('FimQueixa', {
       anamnese: {
         queixas,
@@ -161,12 +186,11 @@ class DeafScreen extends Component {
   }
 
   intensidadeHandler(intensidade) {
-    switch(intensidade) {
-      case 1: return 'Baixa'
-      case 2: return 'Media'
-      case 3: return 'Alta'
-      default: return 'Mediano'
-    }
+    if (intensidade <= 1) return 'Sem dor'
+    if (intensidade > 1 && intensidade <= 2) return 'Pouca dor'
+    if (intensidade > 2 && intensidade <= 3) return 'Dor moderada'
+    if (intensidade > 3 && intensidade < 4.999) return 'Dor intensa'
+    if (intensidade === 5) return 'Dor máxima'
   }
 
   renderItem = () => {
@@ -182,6 +206,7 @@ class DeafScreen extends Component {
             adicionarQueixa={this.adicionarQueixa}
             goTo={this.goTo}
             queixaInput={queixaInput}
+            removeQueixa={this.removeQueixa}
           />
         )
       case 1:

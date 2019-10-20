@@ -12,6 +12,7 @@ import {
 } from '../Auth/AuthStyle'
 
 import Icon from 'react-native-vector-icons/Feather'
+import Fontisto from 'react-native-vector-icons/Fontisto'
 import IconMCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const images = [
@@ -30,7 +31,7 @@ const images = [
   {name: "Alergia", img: require("../../../assets/images/Queixa/alergia.jpeg") },
   {name: "Disuria", img: require("../../../assets/images/Queixa/disuria.jpeg") },
 ]
-const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput }) => (
+const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaInput, removeQueixa }) => (
     <ScrollView style={styles.scroll}>
         <View style={styles.wrapper}>
           <View style={{...styles.row, justifyContent: 'flex-start', paddingLeft: 20}}>
@@ -43,7 +44,7 @@ const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaIn
             })}
           </View>
 
-          <View style={styles.row}>
+          <View style={{...styles.row, marginVertical: 0}}>
             <View style={styles.inputRow}>
               <Icon name="frown" size={24} color="#bdbdbd" />
               <Input
@@ -57,11 +58,11 @@ const Queixa = ({ next, queixas, getQueixaInput, adicionarQueixa, goTo, queixaIn
             </TouchableOpacity>
           </View>
 
-          <View style={{...styles.row, width: '80%', alignItems: 'center', flexDirection: 'column'}}>
-            {queixas.map((queixa, index) => (
-              <Text style={styles.text} key={index}> {queixa} </Text>
-            ))}
-          </View>
+          {queixas.map((queixa, index) => (
+            <TouchableOpacity onPress={(() => removeQueixa(queixa))} style={{...styles.row, width: '80%', flexDirection: 'column', marginVertical: 0, marginBottom: 10}}  key={index}>
+              <Text style={styles.text}><Icon name="x-circle" size={20} color="#2c2c2c" /> {queixa} </Text>
+            </TouchableOpacity>
+          ))}
 
           <Button onPress={() => next()}>
               <Text style={{color: '#f2f2f7', fontSize: 16 }}>Proximo Passo</Text>
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "flex-start",
     color: '#2c2c2c',
-    fontSize: 16
+    fontSize: 20,
   }
 });
 

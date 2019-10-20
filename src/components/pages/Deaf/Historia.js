@@ -19,6 +19,15 @@ const Historia =  ({
 }) => {
 
   const { navigate } = useNavigation()
+
+  function intensidadeHandler(intensidade) {
+    if (intensidade <= 1) return 'Sem dor'
+    if (intensidade > 1 && intensidade <= 2) return 'Pouca dor'
+    if (intensidade > 2 && intensidade <= 3) return 'Dor moderada'
+    if (intensidade > 3 && intensidade < 4.999) return 'Dor intensa'
+    if (intensidade === 5) return 'Dor máxima'
+
+  }
   
   return (
     <View style={styles.wrapper}>
@@ -30,7 +39,7 @@ const Historia =  ({
               <Text style={{...styles.text, fontSize: 30}}>-</Text>
             </TouchableOpacity>
             
-            <Text style={{...styles.text, fontSize: 18}}>{duracao} dias</Text>
+            <Text style={{...styles.text, fontSize: 18}}>{duracao} dia(s)</Text>
 
             <TouchableOpacity onPress={() => getDuracao('+')}>
               <Text style={{...styles.text, fontSize: 20}}>+</Text>
@@ -45,10 +54,7 @@ const Historia =  ({
         <View style={{...styles.field, marginVertical: 0, justifyContent: 'flex-start'}}>
           <Feather name="frown" size={40} color="#2c2c2c" />
           <Text style={styles.text}>
-            { intensidade <= 1 && ' Pouco' ||
-              intensidade > 1 && intensidade <= 2 && 'Mais ou menos' ||
-              intensidade > 2 && ' Bastante'
-            }
+            {intensidadeHandler(intensidade)}
           </Text>
         </View>
 
@@ -56,7 +62,7 @@ const Historia =  ({
             <Slider
               style={{width: '100%',}}
               minimumValue={1}
-              maximumValue={3}
+              maximumValue={5}
               minimumTrackTintColor="#215583"
               maximumTrackTintColor="#000000"
               onValueChange={(value) => getIntensidade(value)}

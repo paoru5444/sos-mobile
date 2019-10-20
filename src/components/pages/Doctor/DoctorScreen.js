@@ -69,30 +69,16 @@ function DoctorScreen(props) {
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.wrapper}>
-          <View style={styles.grid}>
-            <View style={styles.row}>
-              <Text color="#2c2c2c">Queixas: </Text>  
-              <Text color="#2c2c2c" size="14">{anamnese.queixas.join('') || 'Sem queixas cadastradas' }</Text>
-            </View>
-
-            <View style={styles.row}>
-              <View style={styles.column}>
-                <Text color="#2c2c2c">Duracao: {anamnese.duracao + ' dia(s)' || 'Sem duração'}</Text>  
-              </View>
-
-              <View style={styles.column}>
-                <Text color="#2c2c2c">Intensidade: {anamnese.intensidade || 'Sem intensidade'}</Text>  
-              </View> 
-            </View>
-
-            <View style={styles.row}>
-              <Text color="#2c2c2c">Frequencia: {anamnese.frequencia + ' em ' + anamnese.frequencia + 'hora(s)' || 'Sem frequencia'}</Text>  
-
-              {/* <View style={styles.column}>
-                <Text color="#2c2c2c">Localização</Text>  
-                <Text color="#2c2c2c" size="14">{anamnese.localizacao}</Text>
-              </View> */}
-            </View> 
+        <View style={{...styles.row, marginBottom: 0, marginTop: 10}}>
+          <Text color="#2c2c2c" size="20px">
+            Informações do Paciente
+          </Text>
+        </View>
+          <View style={styles.card}>
+            <Text color="#2c2c2c" size="16px">Queixas: {anamnese.queixas.join('') || 'Sem queixas cadastradas' }</Text>
+            <Text color="#2c2c2c" size="16px">Duracao: {anamnese.duracao + ' dia(s)' || 'Sem duração'}</Text>
+            <Text color="#2c2c2c" size="16px">Intensidade: {anamnese.intensidade || 'Sem intensidade'}</Text>  
+            <Text color="#2c2c2c" size="16px">Frequencia: {anamnese.frequencia + ' em ' + anamnese.frequencia + 'hora(s)' || 'Sem frequencia'}</Text>
           </View>
 
           <TouchableOpacity onPress={() => props.navigation.navigate('Drugs', { anamnese })} style={styles.grid}>
@@ -196,6 +182,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f7',
     borderRadius: 30,
     borderBottomColor: '#f2f2f7',
+  },
+  card: {
+    width: '95%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 0.2,
+    borderRadius: 10,
+    flexWrap: 'wrap',
   },
 })
 
