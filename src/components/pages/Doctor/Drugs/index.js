@@ -98,7 +98,7 @@ function Drugs(props) {
               <>
                 <View style={styles.row}>
                   <Image source={require('../../../../assets/images/medicine.png')} style={styles.image} /> 
-                  <Text color="#2c2c2c" size="20px">Quais remédios o pasciente{'\n'}deve comprar?</Text>
+                  <Text color="#2c2c2c" size="20px">Quais remédios o paciente{'\n'}deve comprar?</Text>
                 </View>
 
                 <View style={{...styles.row, marginBottom: 0}}>

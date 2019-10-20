@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Image, StyleSheet, Text, TextInput, TouchableOpacity, View
+  Image, StyleSheet, Text, TextInput,  TouchableNativeFeedback, View
 } from 'react-native'
 
 import {
@@ -33,26 +33,50 @@ const Historia =  ({
     <View style={styles.wrapper}>
         <View style={styles.field}>
           <Text style={styles.text}>Por quanto{'\n'}tempo durou?</Text>
-          <Feather name="calendar" size={40} color="#2c2c2c" />
+          <Feather name="calendar" size={40} color="#424242" />
           <View style={styles.squareField}>
-            <TouchableOpacity onPress={() => getDuracao('-')}>
-              <Text style={{...styles.text, fontSize: 30}}>-</Text>
-            </TouchableOpacity>
+            < TouchableNativeFeedback style={{ padding: 10 }} onPress={() => {
+              getDuracao('-')
+            }}>
+              <Feather name="minus-circle" size={30} color="#215583" />
+            </ TouchableNativeFeedback>
             
             <Text style={{...styles.text, fontSize: 18}}>{duracao} dia(s)</Text>
 
-            <TouchableOpacity onPress={() => getDuracao('+')}>
-              <Text style={{...styles.text, fontSize: 20}}>+</Text>
-            </TouchableOpacity>
+            < TouchableNativeFeedback style={{ padding: 10 }} onPress={() => {
+              getDuracao('+')
+            }}>
+              <Feather name="plus-circle" size={30} color="#215583" />
+            </ TouchableNativeFeedback>
           </View>
         </View>
 
-        <View style={{...styles.field, marginBottom: 0}}>
+         <View style={styles.field}>
+          <Text style={styles.text}>De quanto em{'\n'}quanto tempo</Text>
+          <Feather name="watch" size={40} color="#424242" />
+          <View style={styles.squareField}>
+            < TouchableNativeFeedback style={{ padding: 10 }} onPress={() => {
+              getFrequencia('-')
+            }}>
+              <Feather name="minus-circle" size={30} color="#215583" />
+            </ TouchableNativeFeedback>
+
+            <Text style={{...styles.text, fontSize: 16}}>{frequencia} em {frequencia} horas </Text>
+
+            < TouchableNativeFeedback style={{ padding: 10 }} onPress={() => {
+              getFrequencia('+')
+            }}>
+              <Feather name="plus-circle" size={30} color="#215583" />
+            </ TouchableNativeFeedback>
+          </View>
+        </View>
+
+        <View style={{...styles.field, marginBottom: 0, justifyContent: 'center', width: '100%'}}>
           <Text style={styles.text}>Quando você se sentiu mal, doeu quanto?</Text>
         </View>
 
         <View style={{...styles.field, marginVertical: 0, justifyContent: 'flex-start'}}>
-          <Feather name="frown" size={40} color="#2c2c2c" />
+          <Feather name="frown" size={40} color="#424242" style={{ marginHorizontal: 10 }} />
           <Text style={styles.text}>
             {intensidadeHandler(intensidade)}
           </Text>
@@ -69,39 +93,23 @@ const Historia =  ({
             />
           </View>
 
-        <View style={styles.field}>
-          <Text style={styles.text}>De quanto em{'\n'}quanto tempo</Text>
-          <Feather name="watch" size={40} color="#2c2c2c" />
-          <View style={styles.squareField}>
-            <TouchableOpacity onPress={() => getFrequencia('-')}>
-              <Text style={{...styles.text, fontSize: 30}}>-</Text>
-            </TouchableOpacity>
-
-            <Text style={{...styles.text, fontSize: 18}}>{frequencia} em {frequencia} horas </Text>
-
-            <TouchableOpacity onPress={() => getFrequencia('+')}>
-              <Text style={{...styles.text, fontSize: 20}}>+</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
         {/* <View style={styles.field}>
           <Text style={styles.text}>Localização</Text>
           <View style={styles.squareField}>
-            <TouchableOpacity onPress={() => getLocalizacao('membros')} style={{ alignItems: 'center'}}>
+            < TouchableNativeFeedback onPress={() => getLocalizacao('membros')} style={{ alignItems: 'center'}}>
               <Image source={require('../../../assets/images/historia/broken-arm.png')} style={styles.localizacaoImage} />
               <Text>Membros {localizacao[0] && <Feather name="check" size={20} color="green" />}</Text>
-            </TouchableOpacity>
+            </ TouchableNativeFeedback>
             
-            <TouchableOpacity onPress={() => getLocalizacao('torco')} style={{ alignItems: 'center'}}>
+            < TouchableNativeFeedback onPress={() => getLocalizacao('torco')} style={{ alignItems: 'center'}}>
               <Image source={require('../../../assets/images/historia/abs.png')} style={styles.localizacaoImage} />
               <Text>Torço {localizacao[1] && <Feather name="check" size={20} color="green" />}</Text>
-            </TouchableOpacity>
+            </ TouchableNativeFeedback>
 
-            <TouchableOpacity onPress={() => getLocalizacao('cabeca')} style={{ alignItems: 'center'}}>
+            < TouchableNativeFeedback onPress={() => getLocalizacao('cabeca')} style={{ alignItems: 'center'}}>
               <Image source={require('../../../assets/images/historia/head.png')} style={styles.localizacaoImage} />
               <Text>Cabeça {localizacao[2] && <Feather name="check" size={20} color="green" />}</Text> 
-            </TouchableOpacity>
+            </ TouchableNativeFeedback>
           </View>
         </View> */}
 
@@ -152,7 +160,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#2c2c2c',
-    fontSize: 20,
+    fontSize: 18,
   },
   squareField: {
     width: '50%',

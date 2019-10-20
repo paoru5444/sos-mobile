@@ -79,7 +79,7 @@ export default function ReportDetail(props) {
 
       <View style={styles.row}>
         <Text style={{...styles.text, fontSize: 22}}>
-          Informações do Pasciente
+          Informações do Paciente
         </Text>
       </View>
 

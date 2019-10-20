@@ -8,7 +8,6 @@ export const Button = styled.TouchableOpacity`
   background-color: ${props => props.background || '#215583'};
   align-items: center;
   justify-content: center;
-  elevation: 2;
 `
 
 export const ButtonOutlined = styled.TouchableOpacity`

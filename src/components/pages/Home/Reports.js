@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text,  TouchableWithoutFeedback, View } from 'react-native';
 
 import { useNavigation } from 'react-navigation-hooks';
 
@@ -29,9 +29,15 @@ export function reportsNavigation({ navigation }) {
       backgroundColor: '#216583',
     },
     headerTintColor: '#f2f2f7',
-    headerLeft: <TouchableOpacity style={{ left: 20 }} onPress={() => !openMenu ? menuHandle() : closeHandle()}>
+    headerLeft: < TouchableWithoutFeedback style={{ padding: 20 }} onPress={() => {
+      if(!openMenu) {
+        menuHandle()
+      } else {
+        closeHandle()
+      }
+    }}>
                   <Feather name={!openMenu ? "menu" : "x"} size={30} color="#fff" />
-                </TouchableOpacity>
+                </ TouchableWithoutFeedback>
   }
 }
 

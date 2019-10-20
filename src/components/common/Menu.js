@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    zIndex: 999,
+    elevation: 5
   },
 
   row: {

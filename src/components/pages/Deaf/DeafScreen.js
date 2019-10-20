@@ -16,7 +16,7 @@ class DeafScreen extends Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      title: 'Anamnese',
+      title: 'Queixa',
       headerTintColor: '#f2f2f7',
       headerStyle: {
         backgroundColor: '#215583'
@@ -124,7 +124,6 @@ class DeafScreen extends Component {
   }
 
   getIntensidade = (intensidade) => {
-    console.log(intensidade)
     this.setState({
       intensidade
     })
@@ -138,7 +137,6 @@ class DeafScreen extends Component {
   }
 
   getCRM = (crm) => {
-    console.log('crm')
     this.setState({crm})
   }
 
